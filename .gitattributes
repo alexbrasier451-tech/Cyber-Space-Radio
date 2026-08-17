@@ -1,0 +1,4 @@
+# Frozen Phase 0A evidence hashes are byte-exact and must survive Windows checkout.
+tools/phase0a/phase0a_compare.py text eol=lf
+tools/phase0a/corpus/** text eol=lf
+tools/phase0a/corpus_v2/** text eol=lf

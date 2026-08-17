@@ -62,6 +62,8 @@ SOURCES = {
 }
 
 # The tool emits only category counts, never the matched terms or source text.
+# RELATIONSHIP_TERMS is retained unchanged so the frozen v1 evaluation remains
+# reproducible. Live aggregate counting uses the versioned v2 decision below.
 RELATIONSHIP_TERMS = frozenset(
     {
         "relationship",
@@ -105,6 +107,195 @@ INTERPERSONAL_TERMS = RELATIONSHIP_TERMS | frozenset(
 TOKEN_RE = re.compile(r"[\w']+", re.UNICODE)
 URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
 HEX_RE = re.compile(r"^[0-9a-f]+$")
+
+RELATIONSHIP_MATCHER_VERSION = "relationship-gossip-context-v2"
+RELATIONSHIP_DIRECT_TERMS = frozenset(
+    {
+        "boyfriend",
+        "boyfriends",
+        "girlfriend",
+        "girlfriends",
+        "husband",
+        "husbands",
+        "wife",
+        "wives",
+        "fiance",
+        "fiancee",
+        "fiancé",
+        "fiancée",
+        "sweetheart",
+        "sweethearts",
+        "ex",
+        "exes",
+        "situationship",
+        "situationships",
+        "dumped",
+        "dating",
+        "breakup",
+        "breakups",
+        "divorce",
+        "divorced",
+        "marriage",
+        "married",
+        "affair",
+        "affairs",
+        "wedding",
+        "engagement",
+        "engaged",
+    }
+)
+RELATIONSHIP_CONTEXTUAL_TERMS = frozenset(
+    {
+        "relationship",
+        "relationships",
+        "dating",
+        "breakup",
+        "breakups",
+        "divorce",
+        "divorced",
+        "marriage",
+        "married",
+        "crush",
+        "cheating",
+        "cheated",
+        "affair",
+        "affairs",
+        "gossip",
+        "rumour",
+        "rumours",
+        "rumor",
+        "rumors",
+        "drama",
+        "partner",
+        "partners",
+        "romance",
+        "romantic",
+        "couple",
+        "couples",
+        "wedding",
+        "engagement",
+        "engaged",
+        "separated",
+        "kissed",
+        "reunited",
+    }
+)
+RELATIONSHIP_HUMAN_CONTEXT = frozenset(
+    {
+        "i",
+        "me",
+        "my",
+        "mine",
+        "we",
+        "us",
+        "our",
+        "ours",
+        "you",
+        "your",
+        "he",
+        "him",
+        "his",
+        "she",
+        "her",
+        "hers",
+        "they",
+        "them",
+        "their",
+        "someone",
+        "somebody",
+        "person",
+        "people",
+        "friend",
+        "friends",
+        "neighbour",
+        "neighbours",
+        "neighbor",
+        "neighbors",
+        "colleague",
+        "colleagues",
+        "pair",
+        "trust",
+        "jealous",
+        "jealousy",
+        "commitment",
+        "together",
+        "secret",
+        "secretly",
+    }
+)
+RELATIONSHIP_POSITIVE_PATTERNS = tuple(
+    re.compile(pattern)
+    for pattern in (
+        r"\basked\s+(?:me|him|her|them|us)\s+out\b",
+        r"\b(?:seeing|saw)\s+(?:someone|each\s+other|one\s+another)\b",
+        r"\bcalled\s+off\s+(?:a|the|their|our)\s+wedding\b",
+        r"\bpropos(?:ed|al)\b.*\b(?:accepted|marry|partner|wedding)\b",
+        r"\b(?:pair|they|we|friends?)\b.*\bkissed\b",
+        r"\b(?:quietly|secretly)\s+(?:started\s+seeing|together|a\s+couple)\b",
+        r"\bhiding\s+(?:their\s+|his\s+|her\s+)?texts\b",
+    )
+)
+RELATIONSHIP_NON_HUMAN_PATTERNS = tuple(
+    re.compile(pattern)
+    for pattern in (
+        r"\brelationship\s+between\b",
+        r"\b(?:database|customer|entity|table|data)\s+relationships?\b",
+        r"\b(?:carbon|radiometric|archaeological)\s+dating\b",
+        r"\bdating\b.*\b(?:sample|samples|rock|rocks|manuscript|manuscripts|fossil|fossils)\b",
+        r"\b(?:is|was|are|were)\s+dating\s+(?:from|to)\b",
+        r"\b(?:drama\s+(?:course|class|school)|(?:radio|historical|television|stage)\s+drama)\b",
+        r"\bmarriage\s+of\b",
+        r"\b(?:crush\s+(?:the|these|those)|orange\s+crush)\b",
+        r"\bcheating\b.*\b(?:chess|exam|examination|game|test|quiz)\b",
+        r"\baffair\s+of\s+state\b",
+        r"\bgossip\s+(?:protocol|algorithm)\b",
+        r"\brumou?r\s+(?:spreading|propagation|model)\b",
+        r"\b(?:asteroid|comet|band|cell|particle)\s+breakup\b",
+        r"\bhusband\s+(?:scarce\s+)?resources\b",
+        r"\bromance\s+(?:novel|book|film|genre)\b",
+    )
+)
+
+
+def obvious_content_noise_flags(content: str) -> set[str]:
+    """Return conservative, content-only junk reasons without retaining text."""
+
+    normalized = content.casefold()
+    flags: set[str] = set()
+    if re.search(r"(.)\1{19,}", normalized, re.DOTALL):
+        flags.add("long_character_run")
+    token_list = TOKEN_RE.findall(normalized)
+    if len(token_list) >= 8:
+        most_common = collections.Counter(token_list).most_common(1)[0][1]
+        if most_common / len(token_list) >= 0.80:
+            flags.add("mechanical_token_repeat")
+    urls = URL_RE.findall(content)
+    if len(urls) >= 3 and sum(map(len, urls)) >= max(1, int(len(content) * 0.60)):
+        flags.add("url_heavy")
+    if len(content) >= 32:
+        alphanumeric = sum(character.isalnum() for character in content)
+        if alphanumeric / len(content) <= 0.15:
+            flags.add("symbol_heavy")
+    return flags
+
+
+def relationship_topic_match(content: str) -> bool:
+    """Precision-first v2 relationship/gossip decision for a standalone shout."""
+
+    if obvious_content_noise_flags(content):
+        return False
+    normalized = " ".join(TOKEN_RE.findall(content.casefold()))
+    if any(pattern.search(normalized) for pattern in RELATIONSHIP_NON_HUMAN_PATTERNS):
+        return False
+    terms = set(normalized.split())
+    if terms & RELATIONSHIP_DIRECT_TERMS:
+        return True
+    if any(pattern.search(normalized) for pattern in RELATIONSHIP_POSITIVE_PATTERNS):
+        return True
+    return bool(
+        terms & RELATIONSHIP_CONTEXTUAL_TERMS
+        and terms & RELATIONSHIP_HUMAN_CONTEXT
+    )
 
 
 class SafeWebSocketError(Exception):
@@ -683,30 +874,11 @@ class ContentMetrics:
         self.envelope_sizes.append(envelope_size)
         normalized = content.casefold()
         terms = set(TOKEN_RE.findall(normalized))
-        if terms & RELATIONSHIP_TERMS:
-            self.relationship_yield += 1
-        if terms & INTERPERSONAL_TERMS:
-            self.interpersonal_yield += 1
-
-        flags: set[str] = set()
+        flags = obvious_content_noise_flags(content)
         body_hash = hashlib.sha256(body).digest()
         if body_hash in self._body_hashes:
             flags.add("exact_body_repeat")
         self._body_hashes.add(body_hash)
-        if re.search(r"(.)\1{19,}", normalized, re.DOTALL):
-            flags.add("long_character_run")
-        token_list = TOKEN_RE.findall(normalized)
-        if len(token_list) >= 8:
-            most_common = collections.Counter(token_list).most_common(1)[0][1]
-            if most_common / len(token_list) >= 0.80:
-                flags.add("mechanical_token_repeat")
-        urls = URL_RE.findall(content)
-        if len(urls) >= 3 and sum(map(len, urls)) >= max(1, int(len(content) * 0.60)):
-            flags.add("url_heavy")
-        if len(content) >= 32:
-            alphanumeric = sum(character.isalnum() for character in content)
-            if alphanumeric / len(content) <= 0.15:
-                flags.add("symbol_heavy")
 
         author_hash = hashlib.sha256(author_key.encode("utf-8")).digest()
         timestamp = event_time if event_time is not None else time.time()
@@ -717,6 +889,11 @@ class ContentMetrics:
         recent.append(timestamp)
         if len(recent) > 8:
             flags.add("publisher_burst")
+
+        if not flags and relationship_topic_match(content):
+            self.relationship_yield += 1
+        if not flags and terms & INTERPERSONAL_TERMS:
+            self.interpersonal_yield += 1
 
         if flags:
             self.structurally_flagged_events += 1

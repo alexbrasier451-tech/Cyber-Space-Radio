@@ -4,7 +4,7 @@ Status: **definition owner-approved; evidence gates open; Phase 1 blocked**
 
 Prepared: 2026-08-14
 
-Updated: 2026-08-17
+Updated: 2026-08-18
 Implementation base decision: **do not fork Harken for production; .NET 10
 MAUI is the proposed cross-platform probe foundation, but Phase 0A and physical
 Phase 0B evidence must pass before production implementation**
@@ -134,19 +134,21 @@ federation.
     aggregate live evidence and the accepted 16 KiB body limit.
 11. [Phase 0A source comparison report](PHASE_0A_COMPARISON_REPORT.md) - bounded
     repaired Nostr/Jetstream evidence, passed source/transport sub-gate, and
-    the remaining matcher-quality blocker.
-12. [Phase 0A matcher report](PHASE_0A_MATCHER_REPORT.md) - frozen synthetic
-    corpus, held-out precision/recall evidence, and the failed quality gate.
-13. [Reviewed Phase 0A source register](phase-0a-reviewed-sources.csv) - exact
+    the remaining owner-label-approval blocker.
+12. [Phase 0A Matcher v1 report](PHASE_0A_MATCHER_REPORT.md) - historical
+    frozen baseline and failed first quality gate.
+13. [Phase 0A Matcher v2 report](PHASE_0A_MATCHER_V2_REPORT.md) - fresh
+    held-out metric pass, preserved misses, and frozen owner review sheet.
+14. [Reviewed Phase 0A source register](phase-0a-reviewed-sources.csv) - exact
     approved-disabled endpoint rows from the review.
-14. [Approved-source register template](templates/approved-source-register.csv)
+15. [Approved-source register template](templates/approved-source-register.csv)
     - evidence required before a source can be enabled.
-15. [ADR 0005: local-only direct-source architecture](../adr/0005-local-only-direct-source-architecture.md)
+16. [ADR 0005: local-only direct-source architecture](../adr/0005-local-only-direct-source-architecture.md)
     - the no-backend data-flow and responsibility boundary.
-16. [Phase 0B foundation report](PHASE_0B_FOUNDATION_REPORT.md) - environment,
+17. [Phase 0B foundation report](PHASE_0B_FOUNDATION_REPORT.md) - environment,
     Windows primitive probe, .NET MAUI recommendation, revised estimate, and
     failed physical-device gate.
-17. [Phase 1 requirement traceability matrix](PHASE_1_TRACEABILITY_MATRIX.md)
+18. [Phase 1 requirement traceability matrix](PHASE_1_TRACEABILITY_MATRIX.md)
     - planned automated and UI evidence for every functional requirement.
 
 Supporting documents already in the repository:
@@ -169,7 +171,7 @@ for routine operation; all three reviewed endpoints remain approved-disabled
 outside an explicit bounded Phase 0A run. The Phase 0B desktop primitive probe
 passed, rejected Harken as the production base, and proposed .NET 10 MAUI for
 the next probe, but its physical Android and packaging gate failed. Production
-implementation remains blocked on the Phase 0A matcher precision/label gate and
-the Phase 0B physical-device gate. The cross-source source/transport sub-gate
-has passed. No codebase fork, backend, federation, or public marketplace
-release is part of this gate.
+implementation remains blocked on Phase 0A owner approval of the frozen Matcher
+v2 labels and the Phase 0B physical-device gate. The cross-source
+source/transport sub-gate and Matcher v2 metric gate have passed. No codebase
+fork, backend, federation, or public marketplace release is part of this gate.

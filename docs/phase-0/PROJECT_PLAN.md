@@ -20,7 +20,7 @@ retention, platforms, and release scope.
 | UX definition | Navigation, flows, states, visual concept | 1 day | Complete and owner-approved |
 | Technical foundation | Architecture and data contract | 1 day | Definition complete; physical implementation evidence blocked |
 | Data/source governance | Source register and lifecycle | 0.75 day | Review complete; three sources approved-disabled for local trial |
-| Relay-use-case definition | Standalone-message contract, ADR, and aggregate cross-source evidence | 0.5 day | Source/transport sub-gate passed; matcher precision/label gate failed |
+| Relay-use-case definition | Standalone-message contract, ADR, and aggregate cross-source evidence | 0.5 day | Source/transport and Matcher v2 metrics passed; owner label approval pending |
 | Independent-device definition | Windows/Android lifecycle and pairing boundary | 0.5 day | Complete; Android selected |
 | Mobile foundation spike | Background probes, shared contract, architecture ADR, revised estimate | 8-12 focused days | Windows primitive probe complete; Android/device/packaging evidence blocked |
 | Verification design | Measures, tests, and requirement traceability | 1 day | Complete; 62 requirements mapped to planned automation/UI evidence |
@@ -55,7 +55,7 @@ Windows-only Harken baseline with this combined .NET MAUI range.
 
 | Order | Epic | Main output | Estimate | Depends on |
 |---:|---|---|---:|---|
-| 1 | Relay suitability closure | Improve the matcher on development fixtures; freeze an owner-approved fresh held-out set; pass the 85% precision and 60% recall gate while retaining the completed Nostr/Jetstream source evidence | 2-4 days | M5 |
+| 1 | Relay suitability closure | Record owner approval or corrections for the frozen Matcher v2 label sheet; metrics and Nostr/Jetstream source evidence are complete | <0.5 day if approved unchanged | M5 |
 | 1B | Complete mobile foundation evidence | Pinned toolchain; Android service/notification/STOP, encrypted-store, physical resource, APK/AAB/MSIX evidence | 8-12 days | 1 |
 | 2 | Repository, MAUI shell and CI fixtures | Pinned .NET 10 solution and target builds | 5-7 days | 1B |
 | 3 | Shared contracts and reducer | Domain/state contracts and cross-platform parity harness | 8-12 days | 2 |

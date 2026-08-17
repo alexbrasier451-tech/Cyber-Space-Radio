@@ -229,7 +229,7 @@ contract.
       "watch_id": "watch-uuid",
       "score": 0.91,
       "explanation": ["semantic routing", "peer-to-peer"],
-      "matcher_version": "lexical-v1",
+      "matcher_version": "relationship-gossip-context-v2",
       "validation_evidence_version": "watch-uuid/eval-1"
     }
   ],

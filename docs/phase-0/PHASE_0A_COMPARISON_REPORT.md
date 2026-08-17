@@ -1,10 +1,12 @@
 # Phase 0A source comparison report
 
-Evidence date: **2026-08-17**
+Evidence dates: **2026-08-17 to 2026-08-18**
 
 Source/transport sub-gate: **PASSED**
 
-Overall Phase 0A gate: **NOT PASSED - matcher quality remains below threshold**
+Matcher v2 metric sub-gate: **PASSED**
+
+Overall Phase 0A gate: **PENDING PROJECT-OWNER LABEL APPROVAL**
 
 ## Decision
 
@@ -18,11 +20,12 @@ privacy and resource bounds:
   never printed or persisted; and
 - STOP closes all workers and disables retries.
 
-The source/transport sub-gate therefore passes. This does **not** authorize
-routine listening or Phase 1 implementation. The frozen synthetic matcher
-corpus still fails the accepted 85% precision threshold at 57.14%, and its
-labels remain provisionally owned. The overall Phase 0A gate stays red until a
-revised matcher passes a fresh owner-approved held-out corpus.
+The source/transport sub-gate therefore passes. Frozen Matcher v2 subsequently
+passed its fresh held-out metric gate at 87.50% precision and 100% recall on
+both source structures. This still does **not** authorize routine listening or
+Phase 1 implementation: its synthetic labels remain provisionally owned. The
+overall Phase 0A gate waits for explicit project-owner approval or correction
+of the frozen label sheet.
 
 All reviewed sources remain `approved-disabled` outside explicitly authorized,
 bounded evidence runs.
@@ -175,28 +178,31 @@ unchanged as truthful records of those earlier runs.
 
 ## Matcher evidence and remaining gate
 
-The 220-record, source-balanced synthetic corpus applies the repaired XRPC
-envelope path for Jetstream and the verified event path for Nostr. Its held-out
-result is unchanged:
+The 286-record Matcher v2 corpus applies the repaired XRPC envelope path for
+Jetstream and the verified event path for Nostr. Its newly authored held-out
+split was evaluated only after the matcher freeze:
 
-| Metric | Required | Observed | Result |
-|---|---:|---:|---|
-| Precision | at least 85% | 57.14% | Fail |
-| Recall | at least 60% | 66.67% | Pass |
-| Explicit owner label approval | Required | Outstanding | Fail |
+| Metric | Required | Nostr | Jetstream | Overall | Result |
+|---|---:|---:|---:|---:|---|
+| Precision | at least 85% | 87.50% | 87.50% | 87.50% | Pass |
+| Recall | at least 60% | 100.00% | 100.00% | 100.00% | Pass |
+| Explicit owner label approval | Required | Outstanding | Outstanding | Outstanding | Pending |
 
-The overall Phase 0A gate therefore remains **NOT PASSED**. Durable topic-match
-persistence and reporting must stay disabled. Ephemeral discovery may continue
-only within the already approved bounded prototype/evidence rules.
+The first held-out result preserves five non-personal false-positive concepts
+per source and has no false negatives. The matcher was not changed after that
+result. Full method, hashes, and the approval statement are in the
+[Matcher v2 report](PHASE_0A_MATCHER_V2_REPORT.md).
 
-To close Phase 0A:
+The overall Phase 0A gate therefore remains **PENDING OWNER LABEL APPROVAL**.
+Durable topic-match persistence and reporting stay disabled. Ephemeral
+discovery may continue only within the already approved bounded
+prototype/evidence rules.
 
-1. revise the precision-first matcher using development examples only;
-2. have the project owner review and approve or correct the provisional labels;
-3. freeze a genuinely fresh held-out set before evaluation;
-4. demonstrate at least 85% precision and 60% recall on that set; and
-5. retain the source limits, contact exposure, aggregate privacy, signature
-   checks, immediate STOP, and approved-disabled defaults.
+To close Phase 0A, the project owner must approve the frozen label sheet
+unchanged. A correction invalidates the evaluation and requires a new matcher
+or corpus version and a new held-out result. Source limits, contact exposure,
+aggregate privacy, signature checks, immediate STOP, and approved-disabled
+defaults remain mandatory.
 
 Phase 0B independently remains blocked on physical Android lifecycle, battery,
 notification, STOP, and packaging evidence.
@@ -205,8 +211,9 @@ notification, STOP, and packaging evidence.
 
 Current local verification includes:
 
-- 15 passing source-adapter, signature, boundary, privacy, and envelope tests;
-- 8 passing deterministic corpus tests;
+- 18 passing source-adapter, signature, matcher, boundary, privacy, and
+  envelope tests;
+- 8 passing historical corpus tests and 7 passing Matcher v2 corpus tests;
 - 7 passing prototype/record-management tests;
 - all 19 official BIP-340 vectors matching expectations;
 - successful repaired 60-second all-source and fresh one-second Jetstream live

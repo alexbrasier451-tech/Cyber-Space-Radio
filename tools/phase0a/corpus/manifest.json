@@ -21,7 +21,7 @@
   "provenance": "All text is project-created synthetic fixture prose; no live event content was read, copied, or persisted.",
   "schema": "cyber-space-radio/phase0a-matcher-corpus-manifest/1",
   "sha256": {
-    "../phase0a_compare.py": "51fe3d3805d53049dd47c50b92f77097708e38318d682a350dd1ddb1f06f0c31",
+    "../phase0a_compare.py": "8c16b632ecf04e52dcdaa9ba124526c8d0f22bdd46c60ef1554d517f790f4757",
     "corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
     "evaluate_corpus.py": "fe978cd66a4cdbeb209976a23a84200160533ac3c50a1047bd409114ac7564a5",
     "generate_corpus.py": "509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db"

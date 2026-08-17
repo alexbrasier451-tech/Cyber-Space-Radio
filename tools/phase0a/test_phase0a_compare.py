@@ -20,6 +20,8 @@ from phase0a_compare import (
     bounded_json,
     classify_jetstream_event,
     classify_nostr_event,
+    obvious_content_noise_flags,
+    relationship_topic_match,
     run_comparison,
     verify_schnorr_signature,
 )
@@ -199,6 +201,53 @@ class ClassificationTests(unittest.TestCase):
 
 
 class BoundsAndPrivacyTests(unittest.TestCase):
+    def test_relationship_matcher_v2_accepts_contextual_human_phrasing(self) -> None:
+        examples = (
+            "My partner and I agreed to listen to each other.",
+            "I was dumped by someone I trusted.",
+            "He asked me out for dinner and I said yes.",
+            "A friend says the pair kissed after everyone left.",
+            "Their romance began during a delayed train journey.",
+            "He is hiding texts from the person he lives with.",
+            "Fresh gossip says two friends are secretly together.",
+        )
+        for example in examples:
+            with self.subTest(example=example):
+                self.assertTrue(relationship_topic_match(example))
+
+    def test_relationship_matcher_v2_rejects_non_human_word_senses(self) -> None:
+        examples = (
+            "The relationship between temperature and pressure is linear.",
+            "Radiometric dating can estimate the age of rocks.",
+            "The radio drama uses footsteps to create distance.",
+            "Please crush the empty cans before recycling.",
+            "The player was cheating during the chess match.",
+            "A gossip protocol shares membership between cluster nodes.",
+            "The asteroid breakup produced several fragments.",
+            "The romance novel won a publishing award.",
+        )
+        for example in examples:
+            with self.subTest(example=example):
+                self.assertFalse(relationship_topic_match(example))
+
+    def test_relationship_matcher_v2_suppresses_obvious_junk_first(self) -> None:
+        junk = "dating dating dating dating dating dating dating dating dating dating"
+        self.assertEqual(obvious_content_noise_flags(junk), {"mechanical_token_repeat"})
+        self.assertFalse(relationship_topic_match(junk))
+
+        metrics = ContentMetrics()
+        metrics.observe(junk, author_key="fixture", event_time=1.0, envelope_size=90)
+        aggregate = metrics.aggregate()
+        self.assertEqual(
+            aggregate["lexical_yield_counts"][
+                "relationship_or_gossip_high_confidence"
+            ],
+            0,
+        )
+        self.assertEqual(
+            aggregate["conservative_structural_noise"]["events_flagged"], 1
+        )
+
     def test_jetstream_fails_closed_without_published_operator_contact(self) -> None:
         with self.assertRaisesRegex(ValueError, "operator-contact"):
             run_comparison(1.0, None, "jetstream", None)

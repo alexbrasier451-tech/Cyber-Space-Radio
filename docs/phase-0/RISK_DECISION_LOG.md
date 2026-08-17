@@ -38,7 +38,7 @@
 | D-001 | Provisionally use a history-preserving Harken fork pinned to a full commit SHA as the Windows substrate. | Superseded 2026-08-17 by D-049 | Phase 0B found that retaining Harken would duplicate the sensitive Android core while preserving little of the product's hard path. Keep it as a research reference only. |
 | D-002 | Preserve the current local code as a Phase 0 prototype, not production base. | Accepted | Its requirements and tests are useful; its script architecture is not the long-term framework. |
 | D-003 | Use a loopback-only FastAPI/Jinja web console as the provisional Windows experience; choose the phone UI in Phase 0B. | Superseded 2026-08-17 by D-049 | The proposed .NET MAUI foundation uses native Windows/Android UI and removes the local browser service from the production shape. |
-| D-004 | Keep lexical-v1 as the baseline matcher. | Accepted for planning | Deterministic, local, explainable, and measurable before embeddings. |
+| D-004 | Keep lexical-v1 as the historical baseline matcher. | Superseded 2026-08-18 by D-050 | The first frozen corpus measured its limits; Matcher v2 retains deterministic local explanation while adding context and junk suppression. |
 | D-005 | Keep SQLite as the per-station store through Phase 2. | Accepted for planning | Fits local-first scope; federation does not use it as a global database. |
 | D-006 | Default automatic-match retention is seven days; full text is retained only for topic matches or an explicit local Keep and author profiles remain off. | Accepted; extended by D-031 | Preserves a reviewable signal without accumulating unmatched content or profile data by default. |
 | D-007 | Federation is absent from Phase 1 and Phase 2. | Accepted | Product value and boundaries must be proven first. |
@@ -84,6 +84,7 @@
 | D-047 | Treat an authenticated Jetstream delete as authoritative over Keep and remove all retained versions of its AT URI immediately, leaving only a content-free audit/count. | Accepted | Respecting upstream deletion cannot depend on the local operator being present to approve it. Strict source, collection, and authenticity gates prevent unrelated delete messages from erasing data. |
 | D-048 | Keep every new or edited watch preview-only until that exact frozen definition passes the accepted held-out corpus gate; invalidate promotion after any material edit. | Accepted | The global precision/recall promise must be attributable to the version that saves or notifies. Discovery highlighting and explicit Keep preserve exploration without presenting an untested custom watch as a reliable detector. |
 | D-049 | Do not create the production Harken fork; use a greenfield .NET 10 MAUI solution as the next cross-platform foundation probe. | Proposed; Phase 0B physical gate | One shared C# behavioural core with explicit Windows/Android shells has lower parity and duplicated-security risk than Harken plus a separate phone core. The Windows primitive probe passed, but MAUI, device lifecycle, encrypted SQLite, notification STOP, and packaging remain unproven. |
+| D-050 | Freeze `relationship-gossip-context-v2` as the first matcher to clear the metric gate, with no post-held-out tuning and no durable use until its synthetic labels are owner-approved. | Metrics accepted; label approval pending | The fresh mirrored held-out split scored 87.50% precision and 100% recall per source. Five non-personal false-positive senses are preserved rather than tuned away. |
 
 ## Resolved owner decisions
 
@@ -128,14 +129,16 @@
 
 ## Blocking owner decisions
 
-No owner-choice item remains open from this Phase 0 interview.
+| ID | Decision | Required action |
+|---|---|---|
+| O-031 | Approve or correct the frozen Matcher v2 synthetic labels. | Review `tools/phase0a/corpus_v2/owner_label_review.csv` at SHA-256 `817ff79aff151a55685e70ef4f65b66ddd9802837810d91c401503aaf6b29719`; approve unchanged or list corrections by concept ID. |
 
 ## Evidence and external blockers
 
 | ID | Blocker | Required evidence | Blocks |
 |---|---|---|---|
 | E-001 | The Phase 0B Windows primitive probe passed, but no Android SDK/workload, emulator, physical device, foreground-service lifecycle, encrypted-store, resource, APK/AAB, or MSIX evidence exists. | Green physical API 33/API 36 lifecycle, notification STOP, encryption/store sentinel, battery/bandwidth/memory/storage/thermal, and install/upgrade/uninstall report; then accept or reject ADR 0006. | Production foundation and Phase 1 |
-| E-002 | The public-contact, Nostr signature, Jetstream envelope, and bounded cross-source transport checks now pass, but held-out matcher precision is 57.14% against the accepted 85% threshold and corpus-label approval remains outstanding. | Improve the matcher using development data only; obtain owner label approval; freeze a genuinely fresh held-out set; demonstrate at least 85% precision and 60% recall without weakening source/privacy/STOP bounds. | Durable topic matching and Phase 1 |
+| E-002 | Public contact, signatures, envelope handling, bounded transport, and Matcher v2's fresh held-out metrics pass; explicit owner approval of the frozen synthetic labels remains outstanding. | Resolve O-031 without changing the matcher. A label correction invalidates the result and requires a new version/evaluation. | Durable topic matching and Phase 1 |
 | E-003 | Hosted collection, content-bearing pairing, or federation remains a legal no-go. | Separate architecture decision plus applicable hosted/federated items in `LEGAL_RELEASE_GATE.md`. | Any backend, shared custody, remote reporting, or federation |
 
 Phase 1 must not start until the Phase 0A and Phase 0B evidence gates pass.

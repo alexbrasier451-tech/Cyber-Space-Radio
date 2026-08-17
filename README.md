@@ -65,10 +65,12 @@ conservative 300-event cap in under 0.4 seconds, demonstrating why the future
 adapter needs explicit sampling and backpressure. See the
 [`Phase 0A comparison report`](docs/phase-0/PHASE_0A_COMPARISON_REPORT.md).
 
-The source/transport sub-gate passes, but the frozen 220-record synthetic
-relationship/gossip corpus still fails the 85% precision gate at 57.14%
-(recall 66.67%). Durable topic matching remains disabled. See the
-[`Phase 0A matcher report`](docs/phase-0/PHASE_0A_MATCHER_REPORT.md).
+The source/transport sub-gate passes. Frozen Matcher v2 also passes its fresh
+held-out metric gate at 87.50% precision and 100% recall on both source
+structures. Durable topic matching remains disabled only until the owner
+approves or corrects the frozen synthetic labels. See the historical
+[`Matcher v1 report`](docs/phase-0/PHASE_0A_MATCHER_REPORT.md) and current
+[`Matcher v2 report`](docs/phase-0/PHASE_0A_MATCHER_V2_REPORT.md).
 
 For the future product, ordinary topic-matched records keep the full public
 message text in an encrypted local store for seven days, together with minimal

@@ -59,7 +59,8 @@ recorded evidence on the target platform.
   floor; the volatile waterfall provides broader discovery without lowering
   the persistence gate.
 - A local embedding model is adopted only if it improves agreed measures over
-  lexical-v1 without breaking resource or explanation requirements.
+  the accepted deterministic matcher without breaking resource or explanation
+  requirements.
 
 ## Functional evidence
 

@@ -1,0 +1,166 @@
+{
+  "corpus_validation": {
+    "ambiguous_records": 12,
+    "clear_relevant_records": 118,
+    "per_source": {
+      "jetstream": 143,
+      "nostr": 143
+    },
+    "per_split": {
+      "development": 110,
+      "held_out": 176
+    },
+    "records": 286,
+    "unique_concepts": 143
+  },
+  "corpus_version": "relationship-gossip-synthetic-v2",
+  "frozen_sha256": {
+    "../corpus/corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
+    "../phase0a_compare.py": "8c16b632ecf04e52dcdaa9ba124526c8d0f22bdd46c60ef1554d517f790f4757",
+    "corpus.jsonl": "bd6ef5b997e136699aed7a57f670248c37780577737241cb0d1b6d4a12f2ec8b",
+    "evaluate_corpus.py": "01b8f3d6c03e38c314d8b85c5cc3bc8579471c71252d0167b5bdd8487f1bcce3",
+    "generate_corpus.py": "2817e34b76dce35270a01d3a65e9f3d7a278fd94ff03646e7d15a8a1deda9d79",
+    "owner_label_review.csv": "817ff79aff151a55685e70ef4f65b66ddd9802837810d91c401503aaf6b29719"
+  },
+  "gate": {
+    "label_approval_passed": false,
+    "metric_gate_passed": true,
+    "phase0a_matcher_gate_passed": false,
+    "reasons": [
+      "held-out metric thresholds passed",
+      "explicit project-owner approval of provisional labels remains outstanding"
+    ],
+    "result": "PENDING_OWNER_APPROVAL"
+  },
+  "generated_at_utc": "2026-08-17T23:33:07.439620+00:00",
+  "held_out_error_ids": {
+    "false_negatives": [],
+    "false_positives": [
+      "syn-v2-fresh-near-miss-016-nostr",
+      "syn-v2-fresh-near-miss-016-jetstream",
+      "syn-v2-fresh-near-miss-017-nostr",
+      "syn-v2-fresh-near-miss-017-jetstream",
+      "syn-v2-fresh-near-miss-018-nostr",
+      "syn-v2-fresh-near-miss-018-jetstream",
+      "syn-v2-fresh-near-miss-019-nostr",
+      "syn-v2-fresh-near-miss-019-jetstream",
+      "syn-v2-fresh-near-miss-020-nostr",
+      "syn-v2-fresh-near-miss-020-jetstream"
+    ],
+    "note": "Synthetic fixture IDs only; no source text or live identifiers."
+  },
+  "labels": {
+    "approval_outstanding": true,
+    "project_owner_approval": false,
+    "status": "provisional_project_owner_review"
+  },
+  "matcher_version": "relationship-gossip-context-v2",
+  "method": {
+    "ambiguous_labels": "excluded from precision and recall",
+    "development_data": "v1 development split only",
+    "held_out_first_evaluation": true,
+    "held_out_used_for_tuning": false,
+    "live_content_read_or_persisted": false,
+    "matcher": "frozen production v2 contextual phrase matcher with conservative junk suppression",
+    "pipeline_order": "protocol validation, body limit, standalone classification, protocol-identity deduplication, junk suppression, then topic match",
+    "precision_gate": 0.85,
+    "recall_gate": 0.6
+  },
+  "metrics": {
+    "development": {
+      "jetstream": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "oversized_excluded": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "structurally_excluded": 4,
+        "tn": 29,
+        "total": 55,
+        "tp": 24
+      },
+      "nostr": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "oversized_excluded": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "structurally_excluded": 4,
+        "tn": 29,
+        "total": 55,
+        "tp": 24
+      },
+      "overall": {
+        "ambiguous_excluded": 4,
+        "duplicates_excluded": 4,
+        "evaluated": 106,
+        "false_positives_per_100_candidates": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "oversized_excluded": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "structurally_excluded": 8,
+        "tn": 58,
+        "total": 110,
+        "tp": 48
+      }
+    },
+    "held_out": {
+      "jetstream": {
+        "ambiguous_excluded": 4,
+        "duplicates_excluded": 3,
+        "evaluated": 84,
+        "false_positives_per_100_candidates": 5.952,
+        "fn": 0,
+        "fp": 5,
+        "oversized_excluded": 2,
+        "precision": 0.875,
+        "recall": 1.0,
+        "structurally_excluded": 6,
+        "tn": 44,
+        "total": 88,
+        "tp": 35
+      },
+      "nostr": {
+        "ambiguous_excluded": 4,
+        "duplicates_excluded": 3,
+        "evaluated": 84,
+        "false_positives_per_100_candidates": 5.952,
+        "fn": 0,
+        "fp": 5,
+        "oversized_excluded": 2,
+        "precision": 0.875,
+        "recall": 1.0,
+        "structurally_excluded": 6,
+        "tn": 44,
+        "total": 88,
+        "tp": 35
+      },
+      "overall": {
+        "ambiguous_excluded": 8,
+        "duplicates_excluded": 6,
+        "evaluated": 168,
+        "false_positives_per_100_candidates": 5.952,
+        "fn": 0,
+        "fp": 10,
+        "oversized_excluded": 4,
+        "precision": 0.875,
+        "recall": 1.0,
+        "structurally_excluded": 12,
+        "tn": 88,
+        "total": 176,
+        "tp": 70
+      }
+    }
+  },
+  "schema": "cyber-space-radio/phase0a-matcher-evaluation/2"
+}

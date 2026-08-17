@@ -26,10 +26,11 @@ client evaluation.
 
 This resolves the reviewed endpoints and supplies bounded cross-source
 transport, volume, classification, size, signature, STOP, and resource
-evidence. The source/transport sub-gate passes. The overall Phase 0A gate does
-not pass because the current matcher misses its precision threshold and lacks
-final owner label approval. This does not change the repository-wide legal
-no-go for hosted collection, content-bearing pairing, or federation.
+evidence. The source/transport sub-gate passes. Matcher v2 now also passes the
+fresh held-out metric gate at 87.50% precision and 100% recall per source. The
+overall Phase 0A gate remains pending only because final owner label approval
+is outstanding. This does not change the repository-wide legal no-go for
+hosted collection, content-bearing pairing, or federation.
 
 ## Method
 
@@ -202,9 +203,9 @@ and the primary all-source run verified all 215 valid-ID Nostr deliveries.
    test or until all Phase 0/Phase 1 enablement gates pass.
 2. Preserve the completed public-contact, synthetic handshake, BIP-340,
    Jetstream XRPC-envelope, privacy, STOP, and source-limit checks.
-3. Improve the matcher on development data only, obtain owner label approval,
-   freeze a fresh held-out corpus, and meet the 85% precision and 60% recall
-   thresholds before durable topic persistence or reporting.
+3. Obtain owner approval or corrections for the frozen Matcher v2 label sheet.
+   The 85% precision and 60% recall thresholds have been met; any correction
+   invalidates that result and requires a new version and fresh evaluation.
 4. Add explicit Jetstream sampling/backpressure and reconnect evidence because
    the source reached the conservative 300-event cap in under 0.4 seconds.
 5. Treat missing Nostr terms/contact information as a visible caveat: stop on

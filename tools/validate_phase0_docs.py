@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import re
 import sys
@@ -17,6 +18,7 @@ SOURCE_TEMPLATE = PHASE0 / "templates" / "approved-source-register.csv"
 CHARTER = PHASE0 / "PROJECT_CHARTER.md"
 TRACEABILITY = PHASE0 / "PHASE_1_TRACEABILITY_MATRIX.md"
 CONTACT = ROOT / "CONTACT.md"
+MATCHER_V2 = ROOT / "tools" / "phase0a" / "corpus_v2"
 PROJECT_CONTACT = "mailto:cyberspaceradio@proton.me"
 PROJECT_CONTACT_PAGE = (
     "https://github.com/alexbrasier451-tech/Cyber-Space-Radio/blob/main/CONTACT.md"
@@ -130,6 +132,55 @@ def validate_project_contact() -> str:
     return PROJECT_CONTACT
 
 
+def validate_matcher_v2() -> tuple[int, int, float, float]:
+    manifest_path = MATCHER_V2 / "manifest.json"
+    evidence_path = MATCHER_V2 / "evidence" / "evaluation.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    frozen_paths = {
+        "corpus.jsonl": MATCHER_V2 / "corpus.jsonl",
+        "owner_label_review.csv": MATCHER_V2 / "owner_label_review.csv",
+        "generate_corpus.py": MATCHER_V2 / "generate_corpus.py",
+        "evaluate_corpus.py": MATCHER_V2 / "evaluate_corpus.py",
+        "../phase0a_compare.py": MATCHER_V2.parent / "phase0a_compare.py",
+        "../corpus/corpus.jsonl": MATCHER_V2.parent / "corpus" / "corpus.jsonl",
+    }
+    for name, path in frozen_paths.items():
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != manifest["sha256"][name]:
+            raise AssertionError(f"Matcher v2 frozen hash mismatch for {name}")
+    if not manifest["matcher_frozen_before_held_out_authoring"]:
+        raise AssertionError("Matcher v2 does not record freeze-before-held-out order")
+    if evidence["frozen_sha256"] != manifest["sha256"]:
+        raise AssertionError("Matcher v2 evidence and manifest hashes differ")
+    if not evidence["gate"]["metric_gate_passed"]:
+        raise AssertionError("Matcher v2 metric gate is not recorded as passed")
+    if evidence["gate"]["phase0a_matcher_gate_passed"]:
+        raise AssertionError("Matcher v2 incorrectly claims owner-approved gate passage")
+    if evidence["labels"]["project_owner_approval"]:
+        raise AssertionError("Matcher v2 incorrectly records owner label approval")
+    per_source = evidence["metrics"]["held_out"]
+    for source in ("nostr", "jetstream", "overall"):
+        if per_source[source]["precision"] < 0.85:
+            raise AssertionError(f"Matcher v2 precision failed for {source}")
+        if per_source[source]["recall"] < 0.60:
+            raise AssertionError(f"Matcher v2 recall failed for {source}")
+    with (MATCHER_V2 / "owner_label_review.csv").open(
+        newline="", encoding="utf-8-sig"
+    ) as handle:
+        review_rows = list(csv.DictReader(handle))
+    if len(review_rows) != manifest["counts"]["concepts"]:
+        raise AssertionError("Matcher v2 owner-review row count is wrong")
+    if any(row["owner_decision"] for row in review_rows):
+        raise AssertionError("Matcher v2 owner decisions were recorded without approval")
+    return (
+        manifest["counts"]["records"],
+        manifest["counts"]["concepts"],
+        per_source["overall"]["precision"],
+        per_source["overall"]["recall"],
+    )
+
+
 def main() -> int:
     try:
         reviewed_columns, reviewed_rows = validate_csv(SOURCE_REGISTER, reviewed=True)
@@ -138,6 +189,9 @@ def main() -> int:
         requirements = validate_traceability()
         json_fences = validate_json_fences()
         project_contact = validate_project_contact()
+        matcher_records, matcher_concepts, matcher_precision, matcher_recall = (
+            validate_matcher_v2()
+        )
     except (AssertionError, csv.Error, json.JSONDecodeError, OSError) as exc:
         print(f"Phase 0 documentation validation FAILED: {exc}", file=sys.stderr)
         return 1
@@ -148,7 +202,10 @@ def main() -> int:
         f"template CSV {template_rows}x{template_columns}, "
         f"{requirements} requirements mapped, {links} local links, "
         f"{json_fences} JSON fences, project contact {project_contact} "
-        "published, mailbox-verified, and client-exposed."
+        "published, mailbox-verified, and client-exposed; "
+        f"Matcher v2 {matcher_records} records/{matcher_concepts} concepts, "
+        f"precision {matcher_precision:.3f}, recall {matcher_recall:.3f}, "
+        "owner approval pending."
     )
     return 0
 

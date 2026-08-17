@@ -5,11 +5,12 @@
 **Corpus:** `relationship-gossip-synthetic-v1`
 
 **Matcher:** `phase0a-relationship-terms-v1`
-**Result:** **FAIL — do not enable durable topic matches**
+**Result:** **HISTORICAL BASELINE FAIL — SUPERSEDED BY MATCHER V2**
 
 ## Decision
 
-The existing exact-token lexical matcher passes the held-out recall floor but
+This report remains the v1 baseline. The exact-token lexical matcher passes the
+held-out recall floor but
 fails the precision gate by a large margin:
 
 | Held-out scope | Candidates evaluated | TP | FP | TN | FN | Precision | Recall | Result |
@@ -22,10 +23,13 @@ The accepted thresholds are precision at least 85% and recall at least 60%.
 Recall passes; precision does not. There were 22.642 false positives per 100
 evaluated held-out candidates.
 
-Label approval is a second independent failure: clear labels were assigned as
+Label approval was a second independent failure: clear labels were assigned as
 provisional product-team labels, but the project owner has not explicitly
 approved them. Approval remains outstanding. Owner approval alone would not
-make this result pass because precision is still below threshold.
+make this historical result pass because precision is still below threshold.
+Matcher v2 was developed only from this corpus's development split and was
+evaluated against a new held-out set; see the
+[current Matcher v2 report](PHASE_0A_MATCHER_V2_REPORT.md).
 
 ## Corpus and split
 
@@ -90,7 +94,7 @@ label requires a new version and a fresh, unseen held-out set.
 | `corpus.jsonl` | `8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019` |
 | `generate_corpus.py` | `509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db` |
 | `evaluate_corpus.py` | `fe978cd66a4cdbeb209976a23a84200160533ac3c50a1047bd409114ac7564a5` |
-| `phase0a_compare.py` | `51fe3d3805d53049dd47c50b92f77097708e38318d682a350dd1ddb1f06f0c31` |
+| `phase0a_compare.py` | `8c16b632ecf04e52dcdaa9ba124526c8d0f22bdd46c60ef1554d517f790f4757` |
 
 The [manifest](../../tools/phase0a/corpus/manifest.json) verifies all four
 inputs before evaluation. The machine-readable [evaluation evidence](../../tools/phase0a/corpus/evidence/evaluation.json)
@@ -99,6 +103,8 @@ contains aggregate results and synthetic fixture IDs only.
 The Jetstream synthetic path now includes the observed v2 XRPC outer
 `message`/`payload` envelope before the unchanged commit and post classifier.
 Metrics remain unchanged after regenerating and re-evaluating all 220 records.
+The pinned comparison module now also contains Matcher v2, while this evaluator
+continues to call the unchanged v1 token constants explicitly.
 
 ## Reproduction
 
@@ -114,14 +120,15 @@ The focused suite passes 8 of 8 tests. The final evaluator intentionally exits
 with status 1 because the gate result is `FAIL`; its evidence file is still a
 successful, complete measurement.
 
-## Required next evidence
+## Historical closure
 
-Before this bundled topic can create persistent signals:
+This baseline's required successor work was completed on 2026-08-18:
 
-1. the owner reviews and explicitly accepts or corrects the provisional labels;
-2. matcher improvements are developed only against development material;
-3. a new corpus version supplies a fresh unseen held-out set;
-4. both per-source and overall held-out precision reach 85% and recall reaches
-   60%; and
-5. a later authorised live sample is used only as a separate usefulness check,
-   not copied into this synthetic corpus.
+1. Matcher v2 was developed only against development material;
+2. a new corpus version supplied a fresh held-out set; and
+3. per-source and overall held-out precision reached 87.50% and recall reached
+   100%.
+
+Explicit owner approval of the v2 label sheet remains outstanding. A later
+authorised live sample is still a separate usefulness check and must not be
+copied into either synthetic corpus.

@@ -1,0 +1,34 @@
+{
+  "corpus_version": "relationship-gossip-synthetic-v2",
+  "counts": {
+    "ambiguous_records": 12,
+    "clear_relevant_records": 118,
+    "concepts": 143,
+    "development_records": 110,
+    "held_out_records": 176,
+    "records": 286,
+    "source_families": [
+      "nostr",
+      "jetstream"
+    ]
+  },
+  "created_date": "2026-08-18",
+  "generation": "deterministic; no randomness; no network access",
+  "held_out_tuning": "prohibited; preserve the first evaluation without matcher changes",
+  "label_status": "provisional_project_owner_review; explicit approval outstanding",
+  "license": "CC0-1.0",
+  "matcher_frozen_before_held_out_authoring": true,
+  "matcher_frozen_sha256": "8c16b632ecf04e52dcdaa9ba124526c8d0f22bdd46c60ef1554d517f790f4757",
+  "matcher_version": "relationship-gossip-context-v2",
+  "provenance": "Project-created synthetic fixtures only; no live content.",
+  "schema": "cyber-space-radio/phase0a-matcher-corpus-manifest/2",
+  "sha256": {
+    "../corpus/corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
+    "../phase0a_compare.py": "8c16b632ecf04e52dcdaa9ba124526c8d0f22bdd46c60ef1554d517f790f4757",
+    "corpus.jsonl": "bd6ef5b997e136699aed7a57f670248c37780577737241cb0d1b6d4a12f2ec8b",
+    "evaluate_corpus.py": "01b8f3d6c03e38c314d8b85c5cc3bc8579471c71252d0167b5bdd8487f1bcce3",
+    "generate_corpus.py": "2817e34b76dce35270a01d3a65e9f3d7a278fd94ff03646e7d15a8a1deda9d79",
+    "owner_label_review.csv": "817ff79aff151a55685e70ef4f65b66ddd9802837810d91c401503aaf6b29719"
+  },
+  "split_rule": "Development is the v1 development split used for tuning; held_out is newly authored v2 material first evaluated only after Matcher v2 freeze."
+}

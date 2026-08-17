@@ -45,16 +45,19 @@ message-body ceiling. A separate defensive decision caps the assembled incoming
 Nostr event message at 65,536 UTF-8 bytes. It did not measure the complete
 usefulness/noise question and does not replace the cross-source gate below.
 
-**2026-08-17 result: SOURCE/TRANSPORT PASSED; OVERALL PHASE 0A NOT PASSED.** The
+**2026-08-18 result: SOURCE/TRANSPORT AND MATCHER METRICS PASSED; OVERALL PHASE
+0A PENDING OWNER LABEL APPROVAL.** The
 [comparison report](PHASE_0A_COMPARISON_REPORT.md) records a repaired compliant
 60-second all-source run: 97 unique valid Nostr events, 72 unique standalone
 Nostr shouts, 215/215 valid Nostr signatures, and 103 standalone Jetstream
 posts from its first 300 bounded deliveries. The public-contact gate, STOP,
 privacy, source bounds, and adapter compatibility checks passed. Jetstream's
 XRPC envelope mismatch was diagnosed at the normalization boundary, repaired,
-and confirmed by the original end-to-end rerun plus a fresh live case. The
-overall gate remains red because held-out matcher precision is 57.14% against
-the required 85%, and corpus-label approval remains outstanding.
+and confirmed by the original end-to-end rerun plus a fresh live case. Frozen
+Matcher v2 then scored 87.50% precision and 100% recall on each source's newly
+authored held-out split. Its first result is preserved without post-evaluation
+tuning. The overall gate now waits only for explicit project-owner approval or
+correction of the frozen synthetic labels.
 
 Deliverables:
 
@@ -136,7 +139,7 @@ Deliverables:
 - approved relay/event adapter, signature/envelope validation, standalone
   classifier, 65,536-byte Nostr envelope gate, 16,384-byte decoded-body gate,
   bounded replay, and reconnect control;
-- watches, alternatives, exclusions, and lexical-v1 matcher;
+- watches, alternatives, exclusions, and a versioned validated matcher;
 - privacy projection before persistence;
 - authenticated local encryption for full durable message text, key
   handling, manual startup unlock, fail-closed locked/stopped restart, lock on
@@ -182,8 +185,8 @@ depend on it.
 
 Candidate deliverables:
 
-- optional local embedding matcher, adopted only if the evaluation corpus shows
-  material improvement over lexical-v1;
+- optional local embedding matcher, adopted only if a new evaluation corpus
+  shows material improvement over the accepted deterministic baseline;
 - per-watch tuning and richer explanations;
 - approved supported-API adapters, added one at a time;
 - source-policy review reminders and opt-out workflow;
