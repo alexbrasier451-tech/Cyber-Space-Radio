@@ -1,0 +1,210 @@
+{
+  "adapter_complexity": {
+    "jetstream_adapter_nonblank_sloc": 66,
+    "measurement_note": "class-source nonblank lines; excludes shared classifiers/tests",
+    "nostr_adapter_nonblank_sloc": 74,
+    "shared_websocket_nonblank_sloc": 217
+  },
+  "generated_at_utc": "2026-08-17T20:36:39.374472+00:00",
+  "method": {
+    "credentials_or_authentication_used": false,
+    "decoded_body_limit_bytes": 16384,
+    "duration_limit_seconds": 60.0,
+    "event_limit_per_source": 300,
+    "jetstream_repository_signature_verification": false,
+    "nostr_envelope_limit_bytes": 65536,
+    "nostr_event_id_recalculation": true,
+    "nostr_local_subscription_limit": 100,
+    "nostr_schnorr_signature_verification_available": false,
+    "nostr_signature_verified_count": 0,
+    "operator_contact_prerequisite_satisfied": false,
+    "operator_contact_value_output_or_persisted": false,
+    "planned_reconnect_after_seconds": 5.0,
+    "publishing_or_contact_performed": false,
+    "raw_content_output_or_persistence": false,
+    "replay_limit_seconds": 60,
+    "source_family_selection": "nostr",
+    "source_ids_included": [
+      "nostr_damus",
+      "nostr_nos_lol"
+    ]
+  },
+  "nostr_combined_deduplicated": {
+    "body_sizes": {
+      "count": 82,
+      "max_bytes": 861,
+      "mean_bytes": 247.4,
+      "median_bytes": 195,
+      "p75_bytes": 291,
+      "p90_bytes": 489,
+      "p95_bytes": 541,
+      "p99_bytes": 861
+    },
+    "classification_disagreements": 0,
+    "conservative_structural_noise": {
+      "events_flagged": 18,
+      "flag_incidence": {
+        "exact_body_repeat": 12,
+        "publisher_burst": 5,
+        "symbol_heavy": 1
+      },
+      "interpretation": "mechanical indicators only; not a content judgement"
+    },
+    "envelope_sizes": {
+      "count": 82,
+      "max_bytes": 1232,
+      "mean_bytes": 666.8,
+      "median_bytes": 615,
+      "p75_bytes": 673,
+      "p90_bytes": 905,
+      "p95_bytes": 1159,
+      "p99_bytes": 1232
+    },
+    "lexical_yield_counts": {
+      "interpersonal_broad": 0,
+      "relationship_or_gossip_high_confidence": 0
+    },
+    "overlap_recomputed_id_valid": 27,
+    "overlap_standalone": 27,
+    "unique_recomputed_id_valid": 113,
+    "unique_standalone": 82
+  },
+  "per_source": {
+    "nostr_damus": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 37552.2,
+        "inbound_wire_bytes": 2144007,
+        "outbound_wire_bytes": 758
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 148,
+        "duplicate_standalone_deliveries": 49,
+        "duplicate_valid_deliveries": 68,
+        "event_messages": 129,
+        "oversized_envelopes": 17,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 129,
+        "reconnect_attempts": 2,
+        "reconnections_succeeded": 1,
+        "standalone_deliveries": 80,
+        "structurally_addressed_or_conversational": 49,
+        "valid_event_shape": 129,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1,
+        "handshake_rejected": 1
+      },
+      "timing": {
+        "connection_seconds": 57.094,
+        "event_messages_per_second": 2.259,
+        "first_connected_after_seconds": 0.438,
+        "last_event_after_seconds": 59.907,
+        "stop_close_latency_ms": 16.0
+      }
+    },
+    "nostr_nos_lol": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 912.8,
+        "inbound_wire_bytes": 54527,
+        "outbound_wire_bytes": 536
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 88,
+        "duplicate_standalone_deliveries": 34,
+        "duplicate_valid_deliveries": 34,
+        "event_messages": 86,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 86,
+        "reconnect_attempts": 1,
+        "reconnections_succeeded": 1,
+        "standalone_deliveries": 85,
+        "structurally_addressed_or_conversational": 1,
+        "valid_event_shape": 86,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1
+      },
+      "timing": {
+        "connection_seconds": 59.734,
+        "event_messages_per_second": 1.44,
+        "first_connected_after_seconds": 0.157,
+        "last_event_after_seconds": 59.688,
+        "stop_close_latency_ms": 16.0
+      }
+    }
+  },
+  "resource": {
+    "cpu_seconds": 0.219,
+    "traced_python_heap_current_bytes": 271254,
+    "traced_python_heap_peak_bytes": 363556,
+    "wall_seconds": 60.016,
+    "worker_threads": 2
+  },
+  "schema": "cyber-space-radio/phase0a-comparison-aggregate/1"
+}

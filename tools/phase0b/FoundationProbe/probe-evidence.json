@@ -1,0 +1,24 @@
+{
+  "generated_at_utc": "2026-08-17T21:40:48.7189019+00:00",
+  "runtime": "8.0.4",
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "architecture": "X64",
+  "checks": {
+    "wrong_passphrase_fails_closed": true,
+    "plaintext_absent_from_durable_record": true,
+    "authenticated_record_round_trip": true,
+    "tampered_record_fails_closed": true,
+    "loopback_websocket_round_trip": true,
+    "stop_cancels_pending_receive": true,
+    "stop_closes_socket": true,
+    "launch_is_stopped_and_locked": true,
+    "stop_returns_to_locked_fail_closed_state": true,
+    "unclean_restart_does_not_resume": true
+  },
+  "all_passed": true,
+  "notes": [
+    "The cryptographic passphrase is synthetic test data, not a user secret.",
+    "The WebSocket probe uses loopback only and contacts no external endpoint.",
+    "This console probe does not prove Android lifecycle, Keystore, notification, battery, or packaging behavior."
+  ]
+}

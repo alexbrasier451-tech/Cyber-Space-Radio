@@ -1,0 +1,213 @@
+{
+  "adapter_complexity": {
+    "jetstream_adapter_nonblank_sloc": 66,
+    "measurement_note": "class-source nonblank lines; excludes shared classifiers/tests",
+    "nostr_adapter_nonblank_sloc": 78,
+    "shared_websocket_nonblank_sloc": 217
+  },
+  "generated_at_utc": "2026-08-17T21:34:41.403518+00:00",
+  "method": {
+    "credentials_or_authentication_used": false,
+    "decoded_body_limit_bytes": 16384,
+    "duration_limit_seconds": 15.0,
+    "event_limit_per_source": 300,
+    "jetstream_repository_signature_verification": false,
+    "nostr_envelope_limit_bytes": 65536,
+    "nostr_event_id_recalculation": true,
+    "nostr_local_subscription_limit": 100,
+    "nostr_schnorr_signature_verification_available": true,
+    "nostr_signature_verified_count": 178,
+    "nostr_signature_verifier": "coincurve",
+    "nostr_signature_verifier_version": "21.0.0",
+    "operator_contact_prerequisite_satisfied": false,
+    "operator_contact_value_output_or_persisted": false,
+    "planned_reconnect_after_seconds": 5.0,
+    "publishing_or_contact_performed": false,
+    "raw_content_output_or_persistence": false,
+    "replay_limit_seconds": 60,
+    "source_family_selection": "nostr",
+    "source_ids_included": [
+      "nostr_damus",
+      "nostr_nos_lol"
+    ]
+  },
+  "nostr_combined_deduplicated": {
+    "body_sizes": {
+      "count": 66,
+      "max_bytes": 998,
+      "mean_bytes": 258.3,
+      "median_bytes": 195,
+      "p75_bytes": 297,
+      "p90_bytes": 505,
+      "p95_bytes": 744,
+      "p99_bytes": 998
+    },
+    "classification_disagreements": 0,
+    "conservative_structural_noise": {
+      "events_flagged": 16,
+      "flag_incidence": {
+        "exact_body_repeat": 6,
+        "publisher_burst": 7,
+        "url_heavy": 3
+      },
+      "interpretation": "mechanical indicators only; not a content judgement"
+    },
+    "envelope_sizes": {
+      "count": 66,
+      "max_bytes": 1448,
+      "mean_bytes": 664.3,
+      "median_bytes": 615,
+      "p75_bytes": 673,
+      "p90_bytes": 1012,
+      "p95_bytes": 1126,
+      "p99_bytes": 1448
+    },
+    "lexical_yield_counts": {
+      "interpersonal_broad": 1,
+      "relationship_or_gossip_high_confidence": 0
+    },
+    "overlap_recomputed_id_valid": 18,
+    "overlap_standalone": 18,
+    "unique_recomputed_id_valid": 80,
+    "unique_standalone": 66
+  },
+  "per_source": {
+    "nostr_damus": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 97454.7,
+        "inbound_wire_bytes": 1311058,
+        "outbound_wire_bytes": 758
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 111,
+        "duplicate_standalone_deliveries": 50,
+        "duplicate_valid_deliveries": 63,
+        "event_messages": 100,
+        "oversized_envelopes": 9,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 100,
+        "reconnect_attempts": 2,
+        "reconnections_succeeded": 1,
+        "schnorr_signature_valid": 100,
+        "standalone_deliveries": 73,
+        "structurally_addressed_or_conversational": 27,
+        "valid_event_shape": 100,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1,
+        "handshake_rejected": 1
+      },
+      "timing": {
+        "connection_seconds": 13.453,
+        "event_messages_per_second": 7.433,
+        "first_connected_after_seconds": 1.329,
+        "last_event_after_seconds": 10.469,
+        "stop_close_latency_ms": 0.0
+      }
+    },
+    "nostr_nos_lol": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 3367.9,
+        "inbound_wire_bytes": 48676,
+        "outbound_wire_bytes": 536
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 80,
+        "duplicate_standalone_deliveries": 35,
+        "duplicate_valid_deliveries": 35,
+        "event_messages": 78,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 78,
+        "reconnect_attempts": 1,
+        "reconnections_succeeded": 1,
+        "schnorr_signature_valid": 78,
+        "standalone_deliveries": 78,
+        "valid_event_shape": 78,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1
+      },
+      "timing": {
+        "connection_seconds": 14.453,
+        "event_messages_per_second": 5.397,
+        "first_connected_after_seconds": 0.454,
+        "last_event_after_seconds": 14.766,
+        "stop_close_latency_ms": 0.0
+      }
+    }
+  },
+  "resource": {
+    "cpu_seconds": 0.109,
+    "traced_python_heap_current_bytes": 251963,
+    "traced_python_heap_peak_bytes": 375286,
+    "wall_seconds": 15.032,
+    "worker_threads": 2
+  },
+  "schema": "cyber-space-radio/phase0a-comparison-aggregate/1"
+}

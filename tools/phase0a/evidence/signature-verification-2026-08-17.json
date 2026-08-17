@@ -1,0 +1,44 @@
+{
+  "schema": "cyber-space-radio/phase0a-signature-verification-evidence/1",
+  "generated_at_utc": "2026-08-17T21:35:35.2999256Z",
+  "implementation": {
+    "library": "coincurve",
+    "version": "21.0.0",
+    "backend": "libsecp256k1",
+    "locked_wheel_sha256": "5dd7b66b83b143f3ad3861a68fc0279167a0bae44fe3931547400b7a200e90b1",
+    "phase0a_compare_sha256": "18a97f07dab7a548b126b3a427d54a3be7cd29dd42486c5d7a7c6186abf00058",
+    "test_module_sha256": "762a5a16e48e2e0a41305a9475c9e4920e99695ee03bd72a5d4f88923e68689d"
+  },
+  "authoritative_vectors": {
+    "source": "https://github.com/bitcoin/bips/blob/200f9b26fe0a2f235a2af8b30c4be9f12f6bc9cb/bip-0340/test-vectors.csv",
+    "local_copy_sha256": "01c8cabba63b4c9b2f44c975902990086a4fe56eee9d265b187d1e2c1d98ccfb",
+    "total": 19,
+    "expected_valid": 9,
+    "expected_invalid": 10,
+    "matched_expectation": 19
+  },
+  "focused_test_run": {
+    "command": ".\\.venv\\Scripts\\python.exe -m unittest -v test_phase0a_compare.py",
+    "tests_run": 13,
+    "failures": 0,
+    "errors": 0,
+    "result": "PASS"
+  },
+  "live_aggregate_probe": {
+    "evidence_file": "live-nostr-signature-2026-08-17.json",
+    "evidence_file_sha256": "3cd53660732a7a23ec371481bc36557f73c491eec0459f2c24c20a126fd1a8dd",
+    "duration_seconds": 15,
+    "recomputed_id_valid": 178,
+    "schnorr_signature_valid": 178,
+    "invalid_schnorr_signature": 0,
+    "raw_content_output_or_persistence": false
+  },
+  "acceptance_order": [
+    "bounded envelope and JSON",
+    "bounded event shape and body",
+    "recomputed event ID",
+    "BIP-340 Schnorr signature",
+    "standalone classification",
+    "aggregate-only observation"
+  ]
+}

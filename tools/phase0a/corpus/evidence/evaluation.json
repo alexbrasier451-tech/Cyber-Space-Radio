@@ -1,0 +1,204 @@
+{
+  "corpus_validation": {
+    "ambiguous_records": 8,
+    "category_counts": {
+      "ambiguous": 8,
+      "body-boundary": 12,
+      "duplicate": 8,
+      "matched-positive": 64,
+      "near-miss": 40,
+      "plain-negative": 32,
+      "spam": 8,
+      "structural-exclusion": 16,
+      "unmatched-positive": 32
+    },
+    "clear_relevant_records": 96,
+    "per_source": {
+      "jetstream": 110,
+      "nostr": 110
+    },
+    "per_split": {
+      "development": 110,
+      "held_out": 110
+    },
+    "records": 220,
+    "unique_concepts": 110
+  },
+  "corpus_version": "relationship-gossip-synthetic-v1",
+  "frozen_sha256": {
+    "../phase0a_compare.py": "18a97f07dab7a548b126b3a427d54a3be7cd29dd42486c5d7a7c6186abf00058",
+    "corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
+    "evaluate_corpus.py": "362fdda7f6ce04031f9edf5dc0c978800611fdcbbb552bf3020e7966239155ee",
+    "generate_corpus.py": "509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db"
+  },
+  "gate": {
+    "label_approval_passed": false,
+    "metric_gate_passed": false,
+    "phase0a_matcher_gate_passed": false,
+    "reasons": [
+      "held-out precision is below 0.85",
+      "explicit project-owner approval of provisional labels remains outstanding"
+    ],
+    "result": "FAIL"
+  },
+  "generated_at_utc": "2026-08-17T21:44:21.338864+00:00",
+  "held_out_error_ids": {
+    "false_negatives": [
+      "syn-v1-unmatched-positive-002-nostr",
+      "syn-v1-unmatched-positive-002-jetstream",
+      "syn-v1-unmatched-positive-004-nostr",
+      "syn-v1-unmatched-positive-004-jetstream",
+      "syn-v1-unmatched-positive-006-nostr",
+      "syn-v1-unmatched-positive-006-jetstream",
+      "syn-v1-unmatched-positive-008-nostr",
+      "syn-v1-unmatched-positive-008-jetstream",
+      "syn-v1-unmatched-positive-010-nostr",
+      "syn-v1-unmatched-positive-010-jetstream",
+      "syn-v1-unmatched-positive-012-nostr",
+      "syn-v1-unmatched-positive-012-jetstream",
+      "syn-v1-unmatched-positive-014-nostr",
+      "syn-v1-unmatched-positive-014-jetstream",
+      "syn-v1-unmatched-positive-016-nostr",
+      "syn-v1-unmatched-positive-016-jetstream"
+    ],
+    "false_positives": [
+      "syn-v1-near-miss-002-nostr",
+      "syn-v1-near-miss-002-jetstream",
+      "syn-v1-near-miss-004-nostr",
+      "syn-v1-near-miss-004-jetstream",
+      "syn-v1-near-miss-006-nostr",
+      "syn-v1-near-miss-006-jetstream",
+      "syn-v1-near-miss-008-nostr",
+      "syn-v1-near-miss-008-jetstream",
+      "syn-v1-near-miss-010-nostr",
+      "syn-v1-near-miss-010-jetstream",
+      "syn-v1-near-miss-012-nostr",
+      "syn-v1-near-miss-012-jetstream",
+      "syn-v1-near-miss-014-nostr",
+      "syn-v1-near-miss-014-jetstream",
+      "syn-v1-near-miss-016-nostr",
+      "syn-v1-near-miss-016-jetstream",
+      "syn-v1-near-miss-018-nostr",
+      "syn-v1-near-miss-018-jetstream",
+      "syn-v1-near-miss-020-nostr",
+      "syn-v1-near-miss-020-jetstream",
+      "syn-v1-spam-002-nostr",
+      "syn-v1-spam-002-jetstream",
+      "syn-v1-spam-004-nostr",
+      "syn-v1-spam-004-jetstream"
+    ],
+    "note": "Synthetic fixture IDs only; no source text or live identifiers."
+  },
+  "labels": {
+    "approval_outstanding": true,
+    "project_owner_approval": false,
+    "status": "provisional_product_team"
+  },
+  "matcher_version": "phase0a-relationship-terms-v1",
+  "method": {
+    "ambiguous_labels": "excluded from precision and recall",
+    "held_out_used_for_tuning": false,
+    "lexical_semantics": "casefold; TOKEN_RE token set; match if any exact RELATIONSHIP_TERMS token is present",
+    "live_content_read_or_persisted": false,
+    "pipeline_order": "protocol shape/body/standalone classification, protocol-identity deduplication, then lexical match",
+    "precision_gate": 0.85,
+    "recall_gate": 0.6
+  },
+  "metrics": {
+    "development": {
+      "jetstream": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 8,
+        "fp": 12,
+        "oversized_excluded": 1,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 4,
+        "tn": 17,
+        "total": 55,
+        "tp": 16
+      },
+      "nostr": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 8,
+        "fp": 12,
+        "oversized_excluded": 1,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 4,
+        "tn": 17,
+        "total": 55,
+        "tp": 16
+      },
+      "overall": {
+        "ambiguous_excluded": 4,
+        "duplicates_excluded": 4,
+        "evaluated": 106,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 16,
+        "fp": 24,
+        "oversized_excluded": 2,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 8,
+        "tn": 34,
+        "total": 110,
+        "tp": 32
+      }
+    },
+    "held_out": {
+      "jetstream": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 8,
+        "fp": 12,
+        "oversized_excluded": 1,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 4,
+        "tn": 17,
+        "total": 55,
+        "tp": 16
+      },
+      "nostr": {
+        "ambiguous_excluded": 2,
+        "duplicates_excluded": 2,
+        "evaluated": 53,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 8,
+        "fp": 12,
+        "oversized_excluded": 1,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 4,
+        "tn": 17,
+        "total": 55,
+        "tp": 16
+      },
+      "overall": {
+        "ambiguous_excluded": 4,
+        "duplicates_excluded": 4,
+        "evaluated": 106,
+        "false_positives_per_100_candidates": 22.642,
+        "fn": 16,
+        "fp": 24,
+        "oversized_excluded": 2,
+        "precision": 0.571429,
+        "recall": 0.666667,
+        "structurally_excluded": 8,
+        "tn": 34,
+        "total": 110,
+        "tp": 32
+      }
+    }
+  },
+  "schema": "cyber-space-radio/phase0a-matcher-evaluation/1"
+}

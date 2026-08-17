@@ -1,0 +1,30 @@
+{
+  "corpus_version": "relationship-gossip-synthetic-v1",
+  "counts": {
+    "ambiguous_records": 8,
+    "clear_relevant_records": 96,
+    "concepts": 110,
+    "development_records": 110,
+    "held_out_records": 110,
+    "records": 220,
+    "source_families": [
+      "nostr",
+      "jetstream"
+    ]
+  },
+  "created_date": "2026-08-17",
+  "generation": "deterministic; no randomness; no network access",
+  "held_out_tuning": "prohibited; no matcher changes were made during corpus evaluation",
+  "label_status": "provisional_product_team; explicit project-owner approval outstanding",
+  "license": "CC0-1.0",
+  "matcher_version": "phase0a-relationship-terms-v1",
+  "provenance": "All text is project-created synthetic fixture prose; no live event content was read, copied, or persisted.",
+  "schema": "cyber-space-radio/phase0a-matcher-corpus-manifest/1",
+  "sha256": {
+    "../phase0a_compare.py": "18a97f07dab7a548b126b3a427d54a3be7cd29dd42486c5d7a7c6186abf00058",
+    "corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
+    "evaluate_corpus.py": "362fdda7f6ce04031f9edf5dc0c978800611fdcbbb552bf3020e7966239155ee",
+    "generate_corpus.py": "509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db"
+  },
+  "split_rule": "Within each category, odd one-based concept index is development and even is held_out; each concept is rendered once per source family."
+}
