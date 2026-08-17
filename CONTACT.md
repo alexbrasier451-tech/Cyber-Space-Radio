@@ -20,38 +20,33 @@ therefore stored in separate fields in the approved-source register.
 
 ## Publication state
 
-**Recorded locally; not yet evidenced as publicly published.** This file is in
-the current local, untracked repository. Its existence here does not establish
-that Bluesky, a relay operator, or the public can find it.
+**Published and anonymously reachable; trial verification is incomplete.**
+The initial Phase 0 package was pushed to the public repository in commit
+`1bfa0ff` on 2026-08-17.
 
 The intended public page is:
 
 <https://github.com/alexbrasier451-tech/Cyber-Space-Radio/blob/main/CONTACT.md>
 
-The public repository exists but was empty when this contact was recorded. The
-URL above is therefore a publication target, not evidence that this file is
-already online.
+On 2026-08-17 the raw file was fetched without a signed-in session and returned
+successfully with the exact `mailto:cyberspaceradio@proton.me` route. A local,
+synthetic WebSocket upgrade also confirmed that the bounded client emits the
+exact `X-Cyber-Space-Radio-Operator-Contact` header once without logging or
+persisting the address.
 
-Before a live Jetstream trial, the project must:
+Before a live Jetstream trial, the project must still:
 
-1. push this file to the public repository's `main` branch;
-2. fetch
-   `https://raw.githubusercontent.com/alexbrasier451-tech/Cyber-Space-Radio/main/CONTACT.md`
-   without a signed-in session, require an HTTP success response, and confirm
-   it contains the exact `mailto:cyberspaceradio@proton.me` route;
-3. send a test message from an independent mailbox, confirm it arrives in this
+1. send a test message from an independent mailbox, confirm it arrives in this
    mailbox, and send a reply so receive and reply capability are both checked;
-4. run the bounded client's synthetic handshake test and confirm it emits the
-   exact `X-Cyber-Space-Radio-Operator-Contact` header without logging or
-   persisting the address; and
-5. invoke the authorised Jetstream comparison with
+   and
+2. invoke the authorised Jetstream comparison with
    `--operator-contact mailto:cyberspaceradio@proton.me`.
 
-After the push, re-check the public page through an unauthenticated route rather
-than treating a successful Git operation as publication evidence. Until all
-checks above are recorded, source rows use the contact status
-`recorded-not-published` and remain `approved-disabled`. No external
-publication or live source access is performed by this document update.
+Until the independent mailbox check is recorded, source rows retain the
+conservative contact status `recorded-not-published` and remain
+`approved-disabled`. This label represents the incomplete composite contact
+gate; it does not deny the verified public-file result above. No live
+Jetstream access has yet been performed.
 
 ## Handling
 

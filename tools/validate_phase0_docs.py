@@ -123,8 +123,10 @@ def validate_project_contact() -> str:
         raise AssertionError("CONTACT.md lacks the registered project contact")
     if PROJECT_CONTACT_PAGE not in text:
         raise AssertionError("CONTACT.md lacks the intended public contact page")
-    if "Recorded locally; not yet evidenced as publicly published." not in text:
-        raise AssertionError("CONTACT.md does not preserve the pending-publication state")
+    if "Published and anonymously reachable; trial verification is incomplete." not in text:
+        raise AssertionError("CONTACT.md does not record the verified public-page state")
+    if "independent mailbox check" not in text:
+        raise AssertionError("CONTACT.md does not preserve the pending mailbox gate")
     return PROJECT_CONTACT
 
 
@@ -146,7 +148,7 @@ def main() -> int:
         f"template CSV {template_rows}x{template_columns}, "
         f"{requirements} requirements mapped, {links} local links, "
         f"{json_fences} JSON fences, project contact {project_contact} "
-        "recorded with publication pending."
+        "public page verified with mailbox gate pending."
     )
     return 0
 
