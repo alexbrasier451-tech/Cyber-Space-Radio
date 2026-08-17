@@ -20,7 +20,7 @@ therefore stored in separate fields in the approved-source register.
 
 ## Publication state
 
-**Published and anonymously reachable; trial verification is incomplete.**
+**Published, anonymously reachable, mailbox-verified, and client-exposed.**
 The initial Phase 0 package was pushed to the public repository in commit
 `1bfa0ff` on 2026-08-17.
 
@@ -32,21 +32,16 @@ On 2026-08-17 the raw file was fetched without a signed-in session and returned
 successfully with the exact `mailto:cyberspaceradio@proton.me` route. A local,
 synthetic WebSocket upgrade also confirmed that the bounded client emits the
 exact `X-Cyber-Space-Radio-Operator-Contact` header once without logging or
-persisting the address.
+persisting the address. On the same date, the project operator confirmed that
+a message sent from an independent mailbox arrived successfully and that a
+reply was sent from this Proton mailbox. Message content, addresses other than
+the public project contact, and credentials were not recorded.
 
-Before a live Jetstream trial, the project must still:
-
-1. send a test message from an independent mailbox, confirm it arrives in this
-   mailbox, and send a reply so receive and reply capability are both checked;
-   and
-2. invoke the authorised Jetstream comparison with
-   `--operator-contact mailto:cyberspaceradio@proton.me`.
-
-Until the independent mailbox check is recorded, source rows retain the
-conservative contact status `recorded-not-published` and remain
-`approved-disabled`. This label represents the incomplete composite contact
-gate; it does not deny the verified public-file result above. No live
-Jetstream access has yet been performed.
+The composite contact state is now `published-and-client-exposed`. This clears
+the contact prerequisite for an explicitly authorised, bounded Jetstream
+comparison invoked with
+`--operator-contact mailto:cyberspaceradio@proton.me`; it does not enable
+continuous listening or change any source row from `approved-disabled`.
 
 ## Handling
 

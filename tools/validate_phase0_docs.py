@@ -62,9 +62,9 @@ def validate_csv(path: Path, *, reviewed: bool) -> tuple[int, int]:
             raise AssertionError(
                 f"{path}: reviewed source {row['source_id']} lacks the recorded project contact"
             )
-        if reviewed and row["project_operator_contact_status"] != "recorded-not-published":
+        if reviewed and row["project_operator_contact_status"] != "published-and-client-exposed":
             raise AssertionError(
-                f"{path}: reviewed source {row['source_id']} overstates project-contact publication"
+                f"{path}: reviewed source {row['source_id']} lacks the verified project-contact state"
             )
         if row["owner_contact"] and row["owner_contact"] == row["project_operator_contact"]:
             raise AssertionError(
@@ -123,10 +123,10 @@ def validate_project_contact() -> str:
         raise AssertionError("CONTACT.md lacks the registered project contact")
     if PROJECT_CONTACT_PAGE not in text:
         raise AssertionError("CONTACT.md lacks the intended public contact page")
-    if "Published and anonymously reachable; trial verification is incomplete." not in text:
-        raise AssertionError("CONTACT.md does not record the verified public-page state")
-    if "independent mailbox check" not in text:
-        raise AssertionError("CONTACT.md does not preserve the pending mailbox gate")
+    if "Published, anonymously reachable, mailbox-verified, and client-exposed." not in text:
+        raise AssertionError("CONTACT.md does not record the completed contact gate")
+    if "published-and-client-exposed" not in text:
+        raise AssertionError("CONTACT.md lacks the verified source-register state")
     return PROJECT_CONTACT
 
 
@@ -148,7 +148,7 @@ def main() -> int:
         f"template CSV {template_rows}x{template_columns}, "
         f"{requirements} requirements mapped, {links} local links, "
         f"{json_fences} JSON fences, project contact {project_contact} "
-        "public page verified with mailbox gate pending."
+        "published, mailbox-verified, and client-exposed."
     )
     return 0
 

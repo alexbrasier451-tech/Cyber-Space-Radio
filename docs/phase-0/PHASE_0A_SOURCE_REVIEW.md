@@ -61,14 +61,14 @@ the protocol while still failing this project's stricter approval gate. See the
 | Source operator | Bluesky Social PBC |
 | Source-owner contact | `mailto:support@bsky.app` |
 | Cyber Space Radio operator contact | `mailto:cyberspaceradio@proton.me` |
-| Project-contact publication state | `recorded-not-published` (conservative composite state: public page verified; mailbox check pending) |
+| Project-contact publication state | `published-and-client-exposed` |
 | Intended public contact page | `https://github.com/alexbrasier451-tech/Cyber-Space-Radio/blob/main/CONTACT.md` |
 | Authentication | None for live tail |
 | Server-side filter | One collection: `app.bsky.feed.post`; event kind: `commit` |
 | Cursor | Monotonic `seq`; inclusive replay; delivery is at least once |
 | Published filter limits | Up to 100 collections and 10,000 DIDs per subscription |
 | Local Phase 0A limits | 60-second replay cap, 300 events/minute intake cap, 100-event queue, exponential reconnect backoff from 2 to 60 seconds with jitter, immediate stop |
-| Status | Approved-disabled; independent mailbox receive/reply verification remains a prerequisite |
+| Status | Approved-disabled for routine operation; contact prerequisite cleared for the explicitly authorised bounded Phase 0A comparison |
 
 Bluesky's current documentation says new projects should use v2 and lists the
 US East and US West public instances. It also says no authentication is needed,
@@ -103,14 +103,17 @@ see the
   [contact file](../../CONTACT.md). On 2026-08-17 the raw GitHub file was
   fetched without authentication and matched the exact mailto route. The
   client's synthetic upgrade test also exposed the exact contact header once
-  without logging or persistence. The independent mailbox receive/reply check
-  is still pending, so the composite contact gate is not yet complete.
+  without logging or persistence. The project operator then confirmed an
+  independent mailbox receive/reply test passed on 2026-08-17. No message
+  content or non-project address was recorded. The composite contact gate is
+  therefore complete for the bounded trial.
   See the [Bluesky Developer Guidelines](https://bsky.network/docs/developer-guidelines/).
 - The source owner's `support@bsky.app` address is not the project operator's
   contact. The source register now stores it separately from
-  `mailto:cyberspaceradio@proton.me`. Until mailbox receive/reply capability is
-  confirmed, the Jetstream row remains approved-disabled and live Jetstream
-  evidence must be recorded as not run.
+  `mailto:cyberspaceradio@proton.me`. The receive/reply and client-exposure
+  checks are now complete. The Jetstream row remains approved-disabled for
+  routine operation, but the explicitly authorised bounded Phase 0A comparison
+  may run with the exact contact URI.
 - The Network Services Privacy Notice says public posts are public, but also
   says the service may collect IP address, device/network, and usage data and
   may transfer information internationally. The station must disclose that
