@@ -596,6 +596,11 @@ def _parse_datetime_seconds(value: Any) -> float | None:
 def classify_jetstream_event(message: Any) -> JetstreamResult:
     if not isinstance(message, dict):
         return JetstreamResult(False, False, False)
+    if message.get("$type") == "message":
+        payload = message.get("payload")
+        if not isinstance(payload, dict):
+            return JetstreamResult(False, False, False, reason="xrpc_envelope")
+        message = payload
     type_name = message.get("$type")
     if not isinstance(type_name, str) or not type_name.endswith("#commit"):
         return JetstreamResult(False, False, False, reason="not_commit")

@@ -57,19 +57,17 @@ capped at 65,536 UTF-8 bytes, regardless of WebSocket fragmentation, to bound
 wrapper and tag overhead before event-field parsing. See the
 [`Phase 0A Nostr size report`](docs/phase-0/PHASE_0A_NOSTR_SIZE_SAMPLE.md).
 
-A later bounded 60-second Nostr-only comparison observed 82 unique standalone
-shouts after deduplication, with zero relationship/gossip or broad
-interpersonal lexical hits in that short sample. It did not run Jetstream
-because the required honest project operator contact has not been published,
-and it did not verify Schnorr signatures. The Phase 0A source gate therefore
-remains red; see the
+A repaired bounded all-source comparison now verifies Nostr BIP-340 signatures
+and correctly decodes Jetstream v2's XRPC message envelope. The primary run
+observed 72 unique standalone Nostr shouts and 103 standalone Jetstream posts;
+all 215 valid-ID Nostr deliveries had valid signatures. Jetstream reached the
+conservative 300-event cap in under 0.4 seconds, demonstrating why the future
+adapter needs explicit sampling and backpressure. See the
 [`Phase 0A comparison report`](docs/phase-0/PHASE_0A_COMPARISON_REPORT.md).
 
-A follow-up probe now verifies Nostr BIP-340 signatures before classification:
-all 19 official vectors passed and 178/178 valid-ID live events in the bounded
-aggregate-only probe had valid signatures. The frozen 220-record synthetic
-relationship/gossip corpus nevertheless fails the 85% precision gate at
-57.14% (recall 66.67%), so durable topic matching remains disabled. See the
+The source/transport sub-gate passes, but the frozen 220-record synthetic
+relationship/gossip corpus still fails the 85% precision gate at 57.14%
+(recall 66.67%). Durable topic matching remains disabled. See the
 [`Phase 0A matcher report`](docs/phase-0/PHASE_0A_MATCHER_REPORT.md).
 
 For the future product, ordinary topic-matched records keep the full public

@@ -1,0 +1,140 @@
+{
+  "adapter_complexity": {
+    "jetstream_adapter_nonblank_sloc": 66,
+    "measurement_note": "class-source nonblank lines; excludes shared classifiers/tests",
+    "nostr_adapter_nonblank_sloc": 78,
+    "shared_websocket_nonblank_sloc": 217
+  },
+  "generated_at_utc": "2026-08-17T22:16:22.150460+00:00",
+  "method": {
+    "credentials_or_authentication_used": false,
+    "decoded_body_limit_bytes": 16384,
+    "duration_limit_seconds": 1.0,
+    "event_limit_per_source": 300,
+    "jetstream_repository_signature_verification": false,
+    "nostr_envelope_limit_bytes": 65536,
+    "nostr_event_id_recalculation": true,
+    "nostr_local_subscription_limit": 100,
+    "nostr_schnorr_signature_verification_available": true,
+    "nostr_signature_verified_count": 0,
+    "nostr_signature_verifier": "coincurve",
+    "nostr_signature_verifier_version": "21.0.0",
+    "operator_contact_prerequisite_satisfied": true,
+    "operator_contact_value_output_or_persisted": false,
+    "planned_reconnect_after_seconds": null,
+    "publishing_or_contact_performed": false,
+    "raw_content_output_or_persistence": false,
+    "replay_limit_seconds": 60,
+    "source_family_selection": "jetstream",
+    "source_ids_included": [
+      "jetstream_v2_us_east"
+    ]
+  },
+  "nostr_combined_deduplicated": {
+    "body_sizes": {
+      "count": 0,
+      "max_bytes": null,
+      "mean_bytes": null,
+      "median_bytes": null,
+      "p75_bytes": null,
+      "p90_bytes": null,
+      "p95_bytes": null,
+      "p99_bytes": null
+    },
+    "classification_disagreements": 0,
+    "conservative_structural_noise": {
+      "events_flagged": 0,
+      "flag_incidence": {},
+      "interpretation": "mechanical indicators only; not a content judgement"
+    },
+    "envelope_sizes": {
+      "count": 0,
+      "max_bytes": null,
+      "mean_bytes": null,
+      "median_bytes": null,
+      "p75_bytes": null,
+      "p90_bytes": null,
+      "p95_bytes": null,
+      "p99_bytes": null
+    },
+    "lexical_yield_counts": {
+      "interpersonal_broad": 0,
+      "relationship_or_gossip_high_confidence": 0
+    },
+    "overlap_recomputed_id_valid": 0,
+    "overlap_standalone": 0,
+    "unique_recomputed_id_valid": 0,
+    "unique_standalone": 0
+  },
+  "per_source": {
+    "jetstream_v2_us_east": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 806985.4,
+        "inbound_wire_bytes": 276796,
+        "outbound_wire_bytes": 465
+      },
+      "body_sizes": {
+        "count": 103,
+        "max_bytes": 588,
+        "mean_bytes": 135.7,
+        "median_bytes": 110,
+        "p75_bytes": 175,
+        "p90_bytes": 278,
+        "p95_bytes": 312,
+        "p99_bytes": 495
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 1,
+        "data_messages_received": 300,
+        "event_messages": 300,
+        "intake_cap_reached": 1,
+        "invalid_or_nonpost_events": 31,
+        "rejected_empty": 14,
+        "rejected_quote": 17,
+        "rejected_recipient": 6,
+        "rejected_reply": 143,
+        "rejected_shape": 17,
+        "standalone_unique": 103,
+        "structurally_addressed_or_conversational": 166,
+        "valid_post_events": 269,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 103,
+        "max_bytes": 3096,
+        "mean_bytes": 1019.8,
+        "median_bytes": 933,
+        "p75_bytes": 1193,
+        "p90_bytes": 1633,
+        "p95_bytes": 1914,
+        "p99_bytes": 3051
+      },
+      "family": "jetstream",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 5,
+        "relationship_or_gossip_high_confidence": 2
+      },
+      "safe_error_categories": {},
+      "timing": {
+        "connection_seconds": 0.343,
+        "event_messages_per_second": 874.636,
+        "first_connected_after_seconds": 0.375,
+        "last_event_after_seconds": 0.718,
+        "stop_close_latency_ms": 0.0
+      }
+    }
+  },
+  "resource": {
+    "cpu_seconds": 0.062,
+    "traced_python_heap_current_bytes": 299114,
+    "traced_python_heap_peak_bytes": 313212,
+    "wall_seconds": 0.75,
+    "worker_threads": 1
+  },
+  "schema": "cyber-space-radio/phase0a-comparison-aggregate/1"
+}

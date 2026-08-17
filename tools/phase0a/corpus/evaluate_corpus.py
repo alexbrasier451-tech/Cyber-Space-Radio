@@ -118,7 +118,7 @@ def _jetstream_event(record: dict[str, Any]) -> dict[str, Any]:
         body["embed"] = {"$type": "app.bsky.embed.record", "record": {}}
     elif event_class == "repost":
         collection = "app.bsky.feed.repost"
-    return {
+    payload = {
         "$type": "network.bsky.jetstream.subscribeEvents#commit",
         "seq": _identity_seed(identity),
         "did": "did:plc:syntheticfixture",
@@ -130,6 +130,7 @@ def _jetstream_event(record: dict[str, Any]) -> dict[str, Any]:
         "record": body,
         "cid": hashlib.sha256(identity.encode("utf-8")).hexdigest(),
     }
+    return {"$type": "message", "payload": payload}
 
 
 def lexical_match(text: str) -> bool:

@@ -133,8 +133,8 @@ federation.
 10. [Phase 0A Nostr message-size sample](PHASE_0A_NOSTR_SIZE_SAMPLE.md) -
     aggregate live evidence and the accepted 16 KiB body limit.
 11. [Phase 0A source comparison report](PHASE_0A_COMPARISON_REPORT.md) - bounded
-    Nostr evidence, missing Jetstream/contact and signature evidence, and the
-    failed source gate.
+    repaired Nostr/Jetstream evidence, passed source/transport sub-gate, and
+    the remaining matcher-quality blocker.
 12. [Phase 0A matcher report](PHASE_0A_MATCHER_REPORT.md) - frozen synthetic
     corpus, held-out precision/recall evidence, and the failed quality gate.
 13. [Reviewed Phase 0A source register](phase-0a-reviewed-sources.csv) - exact
@@ -169,7 +169,7 @@ for routine operation; all three reviewed endpoints remain approved-disabled
 outside an explicit bounded Phase 0A run. The Phase 0B desktop primitive probe
 passed, rejected Harken as the production base, and proposed .NET 10 MAUI for
 the next probe, but its physical Android and packaging gate failed. Production
-implementation remains blocked on the full protocol-valid cross-source Phase
-0A evidence, the matcher precision gate, and the Phase 0B physical-device gate.
-No codebase fork, backend, federation, or public marketplace release is part
-of this gate.
+implementation remains blocked on the Phase 0A matcher precision/label gate and
+the Phase 0B physical-device gate. The cross-source source/transport sub-gate
+has passed. No codebase fork, backend, federation, or public marketplace
+release is part of this gate.

@@ -26,9 +26,9 @@
   },
   "corpus_version": "relationship-gossip-synthetic-v1",
   "frozen_sha256": {
-    "../phase0a_compare.py": "18a97f07dab7a548b126b3a427d54a3be7cd29dd42486c5d7a7c6186abf00058",
+    "../phase0a_compare.py": "51fe3d3805d53049dd47c50b92f77097708e38318d682a350dd1ddb1f06f0c31",
     "corpus.jsonl": "8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019",
-    "evaluate_corpus.py": "362fdda7f6ce04031f9edf5dc0c978800611fdcbbb552bf3020e7966239155ee",
+    "evaluate_corpus.py": "fe978cd66a4cdbeb209976a23a84200160533ac3c50a1047bd409114ac7564a5",
     "generate_corpus.py": "509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db"
   },
   "gate": {
@@ -41,7 +41,7 @@
     ],
     "result": "FAIL"
   },
-  "generated_at_utc": "2026-08-17T21:44:21.338864+00:00",
+  "generated_at_utc": "2026-08-17T22:14:54.230206+00:00",
   "held_out_error_ids": {
     "false_negatives": [
       "syn-v1-unmatched-positive-002-nostr",

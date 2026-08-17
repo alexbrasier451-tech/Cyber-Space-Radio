@@ -22,6 +22,11 @@ The verifier seam is tested against all 19 official
 The checked-in vector copy has SHA-256
 `01c8cabba63b4c9b2f44c975902990086a4fe56eee9d265b187d1e2c1d98ccfb`.
 
+Jetstream v2's `xrpc.v1.json` wire path wraps each Lexicon event in an outer
+`{"$type":"message","payload":...}` envelope. The adapter requires and unwraps
+that envelope before applying commit, post-shape, reply, recipient, quote, and
+body-size rules. A malformed message envelope fails closed.
+
 ## Create the reproducible evidence environment
 
 From this directory with 64-bit CPython 3.12 on Windows:
@@ -57,20 +62,20 @@ From this directory after creating the evidence environment:
   --output evidence/live-nostr.json
 ```
 
-Jetstream is approved-disabled until the project publishes an honest operator
-contact. Once that independent prerequisite is actually satisfied, pass its
-public URI explicitly; the tool exposes it in the WebSocket handshake but never
-prints or writes its value:
+Jetstream remains approved-disabled for routine operation. The project's
+[public operator contact](../../CONTACT.md) has passed publication,
+receive/reply, and client-exposure checks, so an explicitly authorized bounded
+trial passes that URI in the WebSocket handshake. The value is never printed or
+written to aggregate evidence:
 
 ```powershell
 .\.venv\Scripts\python.exe phase0a_compare.py `
-  --sources jetstream `
-  --operator-contact mailto:operator@example.org `
+  --sources all `
+  --operator-contact mailto:cyberspaceradio@proton.me `
   --duration 60 `
-  --output evidence/live-jetstream.json
+  --output evidence/live-all.json
 ```
 
-The example address is illustrative only and must never be used for a live run.
 Omitting `--operator-contact` makes `--sources jetstream` and `--sources all`
 fail closed.
 

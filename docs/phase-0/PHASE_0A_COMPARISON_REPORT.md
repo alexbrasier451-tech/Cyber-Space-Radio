@@ -1,181 +1,218 @@
 # Phase 0A source comparison report
 
 Evidence date: **2026-08-17**
-Gate status: **NOT PASSED — limited Nostr evidence only**
+
+Source/transport sub-gate: **PASSED**
+
+Overall Phase 0A gate: **NOT PASSED - matcher quality remains below threshold**
 
 ## Decision
 
-The approved Nostr trial is technically reachable and inexpensive in this
-bounded sample, but it did not produce evidence of useful relationship/gossip
-signal. Jetstream was not contacted because the project has not supplied the
-honest, already-published operator contact required by the approved source
-review. The requested cross-source comparison is therefore incomplete and the
-Phase 0A gate remains red.
+The bounded comparison now demonstrates that both approved source families can
+deliver standalone public shouts to the local-only client with the declared
+privacy and resource bounds:
 
-This is a limitation decision, not a conclusion that either source is unusable.
-No production Phase 1 source integration should start from this evidence.
+- Nostr event IDs and BIP-340 signatures are verified before classification;
+- Jetstream v2 messages are decoded through their XRPC JSON envelope;
+- received message bodies, identifiers, account keys, tags, and records are
+  never printed or persisted; and
+- STOP closes all workers and disables retries.
+
+The source/transport sub-gate therefore passes. This does **not** authorize
+routine listening or Phase 1 implementation. The frozen synthetic matcher
+corpus still fails the accepted 85% precision threshold at 57.14%, and its
+labels remain provisionally owned. The overall Phase 0A gate stays red until a
+revised matcher passes a fresh owner-approved held-out corpus.
+
+All reviewed sources remain `approved-disabled` outside explicitly authorized,
+bounded evidence runs.
 
 ## Scope and privacy controls
 
-The reusable spike is
+The comparison client is
 [`tools/phase0a/phase0a_compare.py`](../../tools/phase0a/phase0a_compare.py).
-It uses one direct read-only WebSocket connection per selected endpoint, no
-credentials, no publishing operation, no author contact, and no project-hosted
-collector. The two Nostr relays are sampled concurrently and deduplicated in
-memory by recalculated event ID.
+It opens one direct, read-only WebSocket connection per selected endpoint, uses
+no credentials, publishes nothing, contacts no message author, and sends no
+data to project-operated infrastructure. The public project-contact URI is
+included only in the Jetstream upgrade header and is not written to evidence.
 
-The collector neither prints nor persists received bodies, event IDs, public
-keys, tags, payloads, or matched terms. Its output contains aggregate counts,
-distributions, timings, safe error categories, and resource measurements only.
-Content and author hashes used for mechanical repeat/burst counters are
-process-local and are discarded at exit.
+The client outputs aggregate counts, byte distributions, timings, safe error
+categories, and resource measurements. Process-local hashes used for Nostr
+deduplication and conservative repeat/burst counts are discarded at exit.
 
 Enforced bounds were:
 
-- 60 seconds wall time and 60 seconds of replay;
+- 60 seconds wall time and at most 60 seconds of replay;
 - at most 300 event messages per source;
 - Nostr subscription `limit` 100;
-- 65,536 bytes per assembled Nostr WebSocket message before JSON parsing;
-- 16,384 UTF-8 bytes per decoded body before classification;
-- one connection per relay, one planned reconnect, and bounded backoff after an
-  unexpected close.
+- 65,536 bytes per assembled Nostr message before JSON parsing;
+- 16,384 UTF-8 bytes per decoded message body;
+- one connection per source, bounded reconnect backoff, and immediate STOP;
+  and
+- no intake work queue in this synchronous evidence client. The production
+  adapter still requires the approved 100-event queue and overflow tests.
 
-This small evidence client processes each received message synchronously and
-does not create an intake work queue. The approved source contract's 100-event
-queue cap therefore had nothing to fill in this run; it remains a production
-adapter requirement and still needs explicit overflow/backpressure tests.
+The primary aggregate is
+[`live-all-2026-08-17.json`](../../tools/phase0a/evidence/live-all-2026-08-17.json).
+The first failed end-to-end attempt is retained as
+[`live-all-envelope-failure-2026-08-17.json`](../../tools/phase0a/evidence/live-all-envelope-failure-2026-08-17.json),
+and the independent fresh Jetstream case is
+[`live-jetstream-fresh-2026-08-17.json`](../../tools/phase0a/evidence/live-jetstream-fresh-2026-08-17.json).
 
-The client validates Nostr envelope shape and recalculates the NIP-01 event ID.
-It **does not verify BIP-340/Schnorr signatures**: no maintained verifier is
-available in the bundled runtime. Accordingly, the evidence calls these events
-“recomputed-ID valid,” never cryptographically verified, and reports the
-signature-verified count as zero. Production signature validation remains a
-hard requirement.
+## Diagnostic repair and end-to-end rerun
 
-The aggregate-only evidence is
-[`live-nostr-2026-08-17.json`](../../tools/phase0a/evidence/live-nostr-2026-08-17.json).
-An earlier five-second connectivity smoke result is retained separately as
-[`smoke-nostr-2026-08-17.json`](../../tools/phase0a/evidence/smoke-nostr-2026-08-17.json).
+The first authorized all-source run connected successfully but classified all
+300 Jetstream deliveries as `not_commit`. A one-second diagnostic probe recorded
+only field names, runtime types, and protocol discriminators. It recorded no
+field values other than the public protocol discriminator strings, no text, and
+no identifiers.
 
-## Live Nostr result
+The semantic checkpoints were:
 
-The primary run lasted 60.016 seconds. A missing counter in the JSON means zero.
+| Checkpoint | Expected | Observed | Verdict |
+|---|---|---|---|
+| WebSocket intake | JSON text messages | 300 bounded JSON messages | Correct |
+| JSON parse | Dictionary envelope | Dictionary with `$type` and `payload` | Correct |
+| XRPC normalization | Commit payload supplied to classifier | Wrapper supplied directly | First wrong |
+| Commit classification | `#commit` discriminator in payload | Outer discriminator was `message` | Downstream failure |
+
+Jetstream v2 framed every observed event as an outer
+`{"$type":"message","payload":...}` object; the nested payload carried the
+`network.bsky.jetstream.subscribeEvents#commit` discriminator and commit fields.
+The classifier had implemented the nested Lexicon object but omitted the XRPC
+message-envelope normalization.
+
+The narrow repair unwraps only an outer `$type` equal to `message`, requires a
+dictionary payload, then applies the existing commit-shape and standalone rules.
+A missing or non-object payload fails closed as `xrpc_envelope`. Direct decoded
+commit fixtures remain supported.
+
+The original 60-second all-source invocation was rerun after the repair and
+completed successfully. Fifteen focused adapter/privacy tests, eight corpus
+tests, the complete root suite, and an independent one-second live Jetstream
+case also pass. The fresh case again accepted 103 standalone posts from the
+first 300 bounded deliveries without recording content or identifiers.
+
+## Primary all-source result
+
+The repaired primary run lasted 60.031 seconds. A missing counter means zero.
+
+### Nostr
 
 | Measure | `relay.damus.io` | `nos.lol` | Combined/deduplicated |
 |---|---:|---:|---:|
-| Data messages received | 148 | 88 | 236 deliveries |
-| Event messages | 129 | 86 | 215 deliveries |
-| Shape-valid and recomputed-ID-valid | 129 | 86 | 113 unique |
-| Standalone | 80 deliveries | 85 deliveries | 82 unique |
-| Addressed/conversational | 49 | 1 | 31 unique by subtraction |
-| Oversized envelopes | 17 | 0 | 17 deliveries |
-| Oversized decoded bodies | 0 | 0 | 0 |
-| Event rate while connected | 2.259/s | 1.440/s | 1.883 unique valid/s wall-clock |
-| Inbound application bytes | 2,144,007 | 54,527 | 2,198,534 |
-| Approx. inbound rate | 37,552 B/s | 913 B/s | 36,632 B/s wall-clock |
+| Event messages | 105 | 110 | 215 deliveries |
+| Recomputed-ID valid | 105 | 110 | 97 unique |
+| BIP-340 signature valid | 105 | 110 | 215 deliveries |
+| Standalone | 68 deliveries | 107 deliveries | 72 unique |
+| Addressed/conversational | 37 | 3 | 25 unique by subtraction |
+| Cross-relay overlap, valid | - | - | 28 unique events |
+| Cross-relay overlap, standalone | - | - | 27 unique events |
+| High-confidence relationship/gossip yield | 0 | 0 | 1 unique |
+| Broad interpersonal yield | 0 | 0 | 2 unique |
 
-The application-byte estimate is measured after TLS decryption and includes
-HTTP upgrade and WebSocket framing; it excludes TCP, IP, and TLS framing. The
-Damus total is dominated by 17 messages rejected at the 64 KiB assembled-message
-boundary.
+The combined standalone bodies averaged 251.1 bytes, with a 195-byte median
+and 1,387-byte maximum. Twelve of 72 unique standalone events were flagged by
+conservative mechanical indicators: six exact-body repeats, five publisher
+bursts, and one URL-heavy body. These flags are not content judgments.
 
-Across 215 recomputed-ID-valid deliveries, local deduplication removed 102
-repeat deliveries (47.4%). Twenty-seven of 113 unique valid events appeared on
-both relays (23.9% cross-relay overlap). Across the standalone subset, 83 of 165
-deliveries were repeats (50.3%), and 27 of 82 unique standalone events appeared
-on both relays (32.9%). The larger delivery-repeat count includes replayed
-events after reconnect as well as cross-relay duplication.
+Both Nostr endpoints completed the planned disconnect/reconnect. `nos.lol`
+also encountered one content-free TLS error and recovered through the bounded
+retry path. All 215 recomputed-ID-valid deliveries had valid BIP-340 signatures.
 
-### Body size, signal, and conservative noise
-
-The following figures cover the 82 unique standalone notes after deduplication:
+### Jetstream v2
 
 | Measure | Result |
 |---|---:|
-| Mean body | 247.4 bytes |
-| Median body | 195 bytes |
-| 90th / 95th percentile | 489 / 541 bytes |
-| Maximum body | 861 bytes |
-| Mean assembled envelope | 666.8 bytes |
-| Maximum accepted assembled envelope | 1,232 bytes |
-| High-confidence relationship/gossip lexical yield | 0 / 82 (0%) |
-| Broad interpersonal lexical yield | 0 / 82 (0%) |
-| Conservatively mechanically flagged | 18 / 82 (22.0%) |
+| Event messages | 300 |
+| Valid post events | 269 |
+| Standalone unique | 103 |
+| Addressed/conversational | 166 |
+| Invalid/non-post | 31 |
+| Replies rejected | 143 |
+| Recipient mentions rejected | 6 |
+| Quote posts rejected | 17 |
+| Empty posts rejected | 14 |
+| Other shape rejections | 17 |
+| High-confidence relationship/gossip yield | 2 |
+| Broad interpersonal yield | 5 |
+| Mean / median / maximum body | 135.7 / 110 / 588 bytes |
+| Mean / maximum accepted envelope | 1,019.8 / 3,096 bytes |
+| Inbound application bytes | 276,796 |
 
-The 18 mechanically flagged events comprised 12 exact-body repeats across
-distinct event IDs, five publisher bursts, and one symbol-heavy body. These are
-deliberately conservative structural indicators, not a claim that an event is
-spam, abusive, false, or unwanted. The zero lexical yield is also not a
-population estimate; it says only that this short unlabelled sample supplies no
-positive usefulness evidence for the intended topic.
+Jetstream reached the conservative 300-event intake cap in 0.391 seconds at an
+observed connected-time rate of about 767 events/second. It therefore stopped
+before the planned five-second reconnect. This is a consequence of the local
+cap, not a reconnect failure. The shared reconnect state machine is covered by
+the Nostr live results; a production Jetstream adapter still needs explicit
+backpressure, sampling, and reconnect testing without weakening the intake
+ceiling.
 
-### Reconnect, STOP, and resource cost
+Jetstream supplies operator-decoded records and the evidence client does not
+independently verify repository signatures. That trust distinction remains a
+source attribute and must be visible in product/source documentation.
 
-Both relays completed the single planned disconnect and reconnect: two
-successful connections and one successful planned reconnection per relay.
-Each later produced one content-free `closed` error category. Damus also had
-one later rejected handshake; the bounded client did not bypass the rejection
-or add parallel connections. The run ended before persistent recovery from
-those late events could be established.
+### STOP and resource cost
 
-STOP closed both workers in approximately 16 ms, with no stop timeout. Peak
-traced Python heap was 363,556 bytes, CPU time was 0.219 seconds, and two worker
-threads were used. Traced heap excludes the Python interpreter, TLS/native
+All three workers exited. Reported STOP close latency was 0 ms for each source.
+Peak traced Python heap was 510,905 bytes, CPU time was 0.234 seconds, and three
+worker threads were used. Traced heap excludes the interpreter, TLS/native
 allocations, and operating-system buffers, so it is a lower-bound comparison
 measure rather than whole-process RSS.
 
-Measured class-source complexity was 217 nonblank lines for the shared bounded
-WebSocket client, 74 for the Nostr adapter, and 66 for the Jetstream adapter.
-These counts exclude classifiers and tests. The Jetstream figure is an
-implementation estimate only because no live Jetstream handshake or event was
-allowed in this run.
+## Signature evidence
 
-## Jetstream evidence gap
+Nostr validation uses pinned `coincurve` 21.0.0 backed by `libsecp256k1`.
+Signature failure occurs before standalone classification or aggregation. All
+19 official BIP-340 vectors matched their expected result. The earlier bounded
+signature probe verified 178 of 178 recomputed-ID-valid deliveries, and this
+all-source run verified 215 of 215.
 
-The approved source review requires Cyber Space Radio to publish an honest
-project operator contact before a Jetstream live trial. No such contact was
-provided, and Bluesky's own support address cannot stand in for the project's.
-The collector now fails closed when `jetstream` or `all` is selected without an
-explicit `--operator-contact`; the value is exposed in the handshake but is not
-included in aggregate output.
+The reproducible metadata is in
+[`signature-verification-2026-08-17.json`](../../tools/phase0a/evidence/signature-verification-2026-08-17.json).
+Historical evidence files that report signature verification unavailable remain
+unchanged as truthful records of those earlier runs.
 
-Consequently, Jetstream has **no live received/valid/standalone counts, size
-distribution, bandwidth, event rate, lexical yield, noise count, reconnect
-result, or resource result** in this evidence package. Static fixture coverage
-does exercise the current v2 commit shape and structural exclusions for replies,
-mentions, and quote posts, but fixtures cannot substitute for the live
-comparison.
+## Matcher evidence and remaining gate
 
-## Gate assessment and required closure
+The 220-record, source-balanced synthetic corpus applies the repaired XRPC
+envelope path for Jetstream and the verified event path for Nostr. Its held-out
+result is unchanged:
 
-Phase 0A does not pass because:
+| Metric | Required | Observed | Result |
+|---|---:|---:|---|
+| Precision | at least 85% | 57.14% | Fail |
+| Recall | at least 60% | 66.67% | Pass |
+| Explicit owner label approval | Required | Outstanding | Fail |
 
-1. the approved Nostr-versus-Jetstream live comparison is incomplete;
-2. the Nostr-only sample produced zero intended-topic lexical hits, so it does
-   not demonstrate a useful signal floor; and
-3. Nostr signatures were not independently verified.
+The overall Phase 0A gate therefore remains **NOT PASSED**. Durable topic-match
+persistence and reporting must stay disabled. Ephemeral discovery may continue
+only within the already approved bounded prototype/evidence rules.
 
-To close the gate:
+To close Phase 0A:
 
-1. publish and supply an honest project operator contact, then run the same
-   bounded aggregate-only comparison with `--sources all`;
-2. add a maintained BIP-340/Schnorr verifier and make signature failure a
-   pre-classification rejection, with valid, invalid, and boundary fixtures;
-3. compare source usefulness on the pre-declared labelled corpus rather than
-   interpreting this unlabelled lexical sample as precision/recall evidence;
-4. repeat the unexpected-close test long enough to establish bounded recovery,
-   while preserving the one-connection-per-source and immediate-STOP rules; and
-5. keep every source disabled after testing until the complete Phase 0A and 0B
-   gates pass.
+1. revise the precision-first matcher using development examples only;
+2. have the project owner review and approve or correct the provisional labels;
+3. freeze a genuinely fresh held-out set before evaluation;
+4. demonstrate at least 85% precision and 60% recall on that set; and
+5. retain the source limits, contact exposure, aggregate privacy, signature
+   checks, immediate STOP, and approved-disabled defaults.
+
+Phase 0B independently remains blocked on physical Android lifecycle, battery,
+notification, STOP, and packaging evidence.
 
 ## Verification and primary references
 
-The focused suite has 12 passing fixtures covering event-ID recalculation,
-standalone structural exclusions, signature non-claims, the exact
-16,383/16,384/16,385-byte body boundary including a multibyte case, the 64 KiB
-envelope boundary, deduplication without identifier output, aggregate privacy,
-masked client frames, Jetstream exclusions, and fail-closed operator-contact
-handling. Both Python modules also compile successfully.
+Current local verification includes:
+
+- 15 passing source-adapter, signature, boundary, privacy, and envelope tests;
+- 8 passing deterministic corpus tests;
+- 7 passing prototype/record-management tests;
+- all 19 official BIP-340 vectors matching expectations;
+- successful repaired 60-second all-source and fresh one-second Jetstream live
+  runs; and
+- no raw content, identifiers, public keys, tags, records, signatures, or
+  operator-contact value in aggregate evidence.
 
 Protocol and endpoint interpretation uses primary sources:
 

@@ -75,6 +75,10 @@ def jetstream_post(record_overrides=None) -> dict:
     }
 
 
+def jetstream_message(record_overrides=None) -> dict:
+    return {"$type": "message", "payload": jetstream_post(record_overrides)}
+
+
 class ClassificationTests(unittest.TestCase):
     def test_nostr_recalculates_id_and_accepts_standalone(self) -> None:
         result = classify_nostr_event(nostr_event())
@@ -157,6 +161,16 @@ class ClassificationTests(unittest.TestCase):
         self.assertTrue(result.valid_shape)
         self.assertTrue(result.standalone)
 
+    def test_jetstream_accepts_xrpc_message_envelope(self) -> None:
+        result = classify_jetstream_event(jetstream_message())
+        self.assertTrue(result.valid_shape)
+        self.assertTrue(result.standalone)
+
+    def test_jetstream_rejects_invalid_xrpc_message_envelope(self) -> None:
+        result = classify_jetstream_event({"$type": "message", "payload": None})
+        self.assertFalse(result.valid_shape)
+        self.assertEqual(result.reason, "xrpc_envelope")
+
     def test_jetstream_rejects_reply_mention_and_quote(self) -> None:
         cases = [
             {"reply": {"root": {}, "parent": {}}},
@@ -179,7 +193,7 @@ class ClassificationTests(unittest.TestCase):
         ]
         for overrides in cases:
             with self.subTest(overrides=overrides):
-                result = classify_jetstream_event(jetstream_post(overrides))
+                result = classify_jetstream_event(jetstream_message(overrides))
                 self.assertTrue(result.valid_shape)
                 self.assertFalse(result.standalone)
 

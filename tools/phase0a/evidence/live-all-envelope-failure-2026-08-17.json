@@ -1,0 +1,267 @@
+{
+  "adapter_complexity": {
+    "jetstream_adapter_nonblank_sloc": 66,
+    "measurement_note": "class-source nonblank lines; excludes shared classifiers/tests",
+    "nostr_adapter_nonblank_sloc": 78,
+    "shared_websocket_nonblank_sloc": 217
+  },
+  "generated_at_utc": "2026-08-17T22:02:20.644339+00:00",
+  "method": {
+    "credentials_or_authentication_used": false,
+    "decoded_body_limit_bytes": 16384,
+    "duration_limit_seconds": 60.0,
+    "event_limit_per_source": 300,
+    "jetstream_repository_signature_verification": false,
+    "nostr_envelope_limit_bytes": 65536,
+    "nostr_event_id_recalculation": true,
+    "nostr_local_subscription_limit": 100,
+    "nostr_schnorr_signature_verification_available": true,
+    "nostr_signature_verified_count": 221,
+    "nostr_signature_verifier": "coincurve",
+    "nostr_signature_verifier_version": "21.0.0",
+    "operator_contact_prerequisite_satisfied": true,
+    "operator_contact_value_output_or_persisted": false,
+    "planned_reconnect_after_seconds": 5.0,
+    "publishing_or_contact_performed": false,
+    "raw_content_output_or_persistence": false,
+    "replay_limit_seconds": 60,
+    "source_family_selection": "all",
+    "source_ids_included": [
+      "nostr_damus",
+      "nostr_nos_lol",
+      "jetstream_v2_us_east"
+    ]
+  },
+  "nostr_combined_deduplicated": {
+    "body_sizes": {
+      "count": 81,
+      "max_bytes": 1007,
+      "mean_bytes": 269.4,
+      "median_bytes": 195,
+      "p75_bytes": 326,
+      "p90_bytes": 560,
+      "p95_bytes": 704,
+      "p99_bytes": 1007
+    },
+    "classification_disagreements": 0,
+    "conservative_structural_noise": {
+      "events_flagged": 15,
+      "flag_incidence": {
+        "exact_body_repeat": 6,
+        "long_character_run": 2,
+        "publisher_burst": 5,
+        "url_heavy": 2
+      },
+      "interpretation": "mechanical indicators only; not a content judgement"
+    },
+    "envelope_sizes": {
+      "count": 81,
+      "max_bytes": 1644,
+      "mean_bytes": 683.3,
+      "median_bytes": 615,
+      "p75_bytes": 763,
+      "p90_bytes": 975,
+      "p95_bytes": 1085,
+      "p99_bytes": 1644
+    },
+    "lexical_yield_counts": {
+      "interpersonal_broad": 0,
+      "relationship_or_gossip_high_confidence": 0
+    },
+    "overlap_recomputed_id_valid": 34,
+    "overlap_standalone": 34,
+    "unique_recomputed_id_valid": 107,
+    "unique_standalone": 81
+  },
+  "per_source": {
+    "jetstream_v2_us_east": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 709733.3,
+        "inbound_wire_bytes": 276796,
+        "outbound_wire_bytes": 465
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 1,
+        "data_messages_received": 300,
+        "event_messages": 300,
+        "intake_cap_reached": 1,
+        "invalid_or_nonpost_events": 300,
+        "rejected_not_commit": 300,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "jetstream",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {},
+      "timing": {
+        "connection_seconds": 0.39,
+        "event_messages_per_second": 769.231,
+        "first_connected_after_seconds": 0.454,
+        "last_event_after_seconds": 0.844,
+        "stop_close_latency_ms": 0.0
+      }
+    },
+    "nostr_damus": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 1596.9,
+        "inbound_wire_bytes": 94618,
+        "outbound_wire_bytes": 556
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 126,
+        "duplicate_standalone_deliveries": 59,
+        "duplicate_valid_deliveries": 73,
+        "event_messages": 124,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 124,
+        "reconnect_attempts": 1,
+        "reconnections_succeeded": 1,
+        "schnorr_signature_valid": 124,
+        "standalone_deliveries": 84,
+        "structurally_addressed_or_conversational": 40,
+        "valid_event_shape": 124,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1
+      },
+      "timing": {
+        "connection_seconds": 59.25,
+        "event_messages_per_second": 2.093,
+        "first_connected_after_seconds": 0.313,
+        "last_event_after_seconds": 57.438,
+        "stop_close_latency_ms": 0.0
+      }
+    },
+    "nostr_nos_lol": {
+      "approximate_bandwidth": {
+        "inbound_bytes_per_second": 1168.9,
+        "inbound_wire_bytes": 68985,
+        "outbound_wire_bytes": 536
+      },
+      "body_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "conservative_structural_noise": {
+        "events_flagged": 0,
+        "flag_incidence": {},
+        "interpretation": "mechanical indicators only; not a content judgement"
+      },
+      "counts": {
+        "connections_succeeded": 2,
+        "control_messages": 2,
+        "data_messages_received": 99,
+        "duplicate_standalone_deliveries": 41,
+        "duplicate_valid_deliveries": 41,
+        "event_messages": 97,
+        "planned_disconnects": 1,
+        "recomputed_id_valid": 97,
+        "reconnect_attempts": 1,
+        "reconnections_succeeded": 1,
+        "schnorr_signature_valid": 97,
+        "standalone_deliveries": 97,
+        "valid_event_shape": 97,
+        "worker_exited": 1
+      },
+      "envelope_sizes": {
+        "count": 0,
+        "max_bytes": null,
+        "mean_bytes": null,
+        "median_bytes": null,
+        "p75_bytes": null,
+        "p90_bytes": null,
+        "p95_bytes": null,
+        "p99_bytes": null
+      },
+      "family": "nostr",
+      "lexical_yield_counts": {
+        "interpersonal_broad": 0,
+        "relationship_or_gossip_high_confidence": 0
+      },
+      "safe_error_categories": {
+        "closed": 1
+      },
+      "timing": {
+        "connection_seconds": 59.016,
+        "event_messages_per_second": 1.644,
+        "first_connected_after_seconds": 0.188,
+        "last_event_after_seconds": 57.454,
+        "stop_close_latency_ms": 0.0
+      }
+    }
+  },
+  "resource": {
+    "cpu_seconds": 0.312,
+    "traced_python_heap_current_bytes": 284104,
+    "traced_python_heap_peak_bytes": 380962,
+    "wall_seconds": 60.032,
+    "worker_threads": 3
+  },
+  "schema": "cyber-space-radio/phase0a-comparison-aggregate/1"
+}

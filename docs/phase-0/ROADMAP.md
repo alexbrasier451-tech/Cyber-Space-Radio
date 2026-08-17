@@ -45,16 +45,16 @@ message-body ceiling. A separate defensive decision caps the assembled incoming
 Nostr event message at 65,536 UTF-8 bytes. It did not measure the complete
 usefulness/noise question and does not replace the cross-source gate below.
 
-**2026-08-17 result: NOT PASSED.** The
-[comparison report](PHASE_0A_COMPARISON_REPORT.md) records a compliant 60-second
-Nostr-only run: 113 unique recomputed-ID-valid events, 82 standalone shouts,
-27 cross-relay overlaps, 18 conservative mechanical flags, and zero
-relationship/gossip or broad-interpersonal lexical hits. Both planned
-reconnects and the roughly 16 ms STOP completed. Jetstream was correctly not
-contacted because no honest already-published project operator contact exists,
-and the bundled runtime had no maintained Schnorr verifier. The run is useful
-bounded evidence but cannot supply the required cross-source or
-cryptographically verified source recommendation.
+**2026-08-17 result: SOURCE/TRANSPORT PASSED; OVERALL PHASE 0A NOT PASSED.** The
+[comparison report](PHASE_0A_COMPARISON_REPORT.md) records a repaired compliant
+60-second all-source run: 97 unique valid Nostr events, 72 unique standalone
+Nostr shouts, 215/215 valid Nostr signatures, and 103 standalone Jetstream
+posts from its first 300 bounded deliveries. The public-contact gate, STOP,
+privacy, source bounds, and adapter compatibility checks passed. Jetstream's
+XRPC envelope mismatch was diagnosed at the normalization boundary, repaired,
+and confirmed by the original end-to-end rerun plus a fresh live case. The
+overall gate remains red because held-out matcher precision is 57.14% against
+the required 85%, and corpus-label approval remains outstanding.
 
 Deliverables:
 

@@ -89,12 +89,16 @@ label requires a new version and a fresh, unseen held-out set.
 |---|---|
 | `corpus.jsonl` | `8df6624c5d29e4b7459ff968d4ce97120f561270448af302293479b814ce9019` |
 | `generate_corpus.py` | `509359275f517acb0fa20cf485cd705a1b521b8dc9d5bf1b5235baaafc6bf1db` |
-| `evaluate_corpus.py` | `362fdda7f6ce04031f9edf5dc0c978800611fdcbbb552bf3020e7966239155ee` |
-| `phase0a_compare.py` | `18a97f07dab7a548b126b3a427d54a3be7cd29dd42486c5d7a7c6186abf00058` |
+| `evaluate_corpus.py` | `fe978cd66a4cdbeb209976a23a84200160533ac3c50a1047bd409114ac7564a5` |
+| `phase0a_compare.py` | `51fe3d3805d53049dd47c50b92f77097708e38318d682a350dd1ddb1f06f0c31` |
 
 The [manifest](../../tools/phase0a/corpus/manifest.json) verifies all four
 inputs before evaluation. The machine-readable [evaluation evidence](../../tools/phase0a/corpus/evidence/evaluation.json)
 contains aggregate results and synthetic fixture IDs only.
+
+The Jetstream synthetic path now includes the observed v2 XRPC outer
+`message`/`payload` envelope before the unchanged commit and post classifier.
+Metrics remain unchanged after regenerating and re-evaluating all 220 records.
 
 ## Reproduction
 

@@ -2,8 +2,8 @@
 
 Review date: **2026-08-17**
 
-Scope: **endpoint, policy, local-client architecture, and bounded size evidence**
-Live message collection performed: **yes - aggregate-only Nostr size sample; no message body retained**
+Scope: **endpoint, policy, local-client architecture, and bounded cross-source evidence**
+Live message collection performed: **yes - aggregate-only Nostr and Jetstream samples; no message body retained**
 
 ## Outcome
 
@@ -24,10 +24,12 @@ no listening data to the project. The incomplete relay policies remain recorded
 operational caveats, but they do not block a standard low-rate local Nostr
 client evaluation.
 
-This resolves which endpoints are under review and supplies a bounded Nostr
-body-size measurement. It does not pass the full Phase 0A cross-source
-usefulness gate and does not change the repository-wide legal no-go for public
-operation.
+This resolves the reviewed endpoints and supplies bounded cross-source
+transport, volume, classification, size, signature, STOP, and resource
+evidence. The source/transport sub-gate passes. The overall Phase 0A gate does
+not pass because the current matcher misses its precision threshold and lacks
+final owner label approval. This does not change the repository-wide legal
+no-go for hosted collection, content-bearing pairing, or federation.
 
 ## Method
 
@@ -169,12 +171,12 @@ service. It is a smaller operational risk for this user-directed local client,
 which performs the ordinary public subscription operation, retains data only
 on the user's device, and can be disconnected immediately.
 
-Nostr is the closer conceptual fit for standalone "shouts in the dark" and is
-viable for bounded engineering probes. Jetstream remains a useful,
-better-documented comparison source. The first Nostr-only comparison run is
-documented in the
-[Phase 0A comparison report](PHASE_0A_COMPARISON_REPORT.md); it did not establish
-source usefulness or a cross-source recommendation.
+Nostr remains the closer conceptual fit for standalone "shouts in the dark"
+and is viable for bounded engineering probes. Jetstream is a useful,
+better-documented high-volume comparison source. The repaired all-source run
+in the [Phase 0A comparison report](PHASE_0A_COMPARISON_REPORT.md) passes the
+source/transport sub-gate while recording Jetstream's operator-trust and
+high-throughput caveats.
 
 ## Live Nostr body-size evidence
 
@@ -189,24 +191,26 @@ relationship/gossip or interpersonal vocabulary. They averaged approximately
 596 bytes and had a 745-byte maximum. That subset is too sparse to estimate the
 topic's population distribution, but it provides no evidence that this focus
 needs unusually large messages. The evidence supports a 16,384-byte local body
-limit while leaving the topic question to the labelled-corpus and full Phase
-0A comparison gates. The sampler recalculated event IDs but did not independently
-verify Schnorr signatures; production validation remains mandatory.
+limit while leaving the topic question to the labelled-corpus gate. The earlier
+size sampler recalculated event IDs without signature verification; the current
+comparison client now rejects invalid BIP-340 signatures before classification,
+and the primary all-source run verified all 215 valid-ID Nostr deliveries.
 
 ## Gate and next actions
 
-1. Keep every reviewed row disabled until the operator starts the bounded test.
-2. Run synthetic and handshake tests before opening any event subscription.
-3. Treat both aggregate-only Nostr runs as limited evidence, not a passed
-   source gate. Publicly publish and verify the recorded project operator
-   contact before any Jetstream run, add maintained Schnorr verification
-   before accepting Nostr candidates, and then run the bounded cross-source
-   comparison against the predeclared labelled corpus.
-4. Treat missing Nostr terms/contact information as a visible caveat: stop on
+1. Keep every reviewed row disabled outside an explicitly authorized bounded
+   test or until all Phase 0/Phase 1 enablement gates pass.
+2. Preserve the completed public-contact, synthetic handshake, BIP-340,
+   Jetstream XRPC-envelope, privacy, STOP, and source-limit checks.
+3. Improve the matcher on development data only, obtain owner label approval,
+   freeze a fresh held-out corpus, and meet the 85% precision and 60% recall
+   thresholds before durable topic persistence or reporting.
+4. Add explicit Jetstream sampling/backpressure and reconnect evidence because
+   the source reached the conservative 300-event cap in under 0.4 seconds.
+5. Treat missing Nostr terms/contact information as a visible caveat: stop on
    access denial or operator request, never bypass controls, and re-review any
    material NIP-11 or endpoint change.
-5. Verify by egress tests that message content, event identifiers, watch terms,
+6. Verify by egress tests that message content, event identifiers, watch terms,
    and listening history never reach project-operated infrastructure.
-6. Do not begin production Phase 1 implementation until the protocol-valid
-   Phase 0A evidence
+7. Do not begin production Phase 1 implementation until the Phase 0A matcher
    gate and the separate Phase 0B Android foundation gate pass.
